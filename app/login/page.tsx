@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { api } from "@/services/api";
 import { useRouter } from "next/navigation";
+import Link from 'next/link';
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -122,9 +123,10 @@ export default function LoginPage() {
             {/* Cadastro */}
             <p className="text-gray-400 text-center mt-6 text-sm">
               Não possui uma conta?{" "}
-              <a href="#" className="text-purple-500 font-bold hover:underline">
+              <Link  href="/cadastro" 
+              className="text-purple-500 font-bold hover:underline">
                 Cadastre-se
-              </a>
+              </Link>
             </p>
           </form>
         </div>
