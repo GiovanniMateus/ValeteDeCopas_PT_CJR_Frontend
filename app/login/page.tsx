@@ -23,15 +23,18 @@ export default function LoginPage() {
       });
 
       
-      const { access_token } = response.data;
+      const { access_token, user } = response.data;
 
-      
-      localStorage.setItem('access_token', access_token);
+      //salvando o token para futuras requisições
+      localStorage.setItem('token', access_token);
+
+      //Salva o usuário
+      localStorage.setItem('user', JSON.stringify(user));
 
       alert("Login realizado com sucesso!");
       
       // Redirecionando do usuário após o login:
-      router.push('/'); // como ainda não fizemos a home estou direcionando para "/" após o login
+      router.push('/home'); 
 
     } catch (error: any) {
       
