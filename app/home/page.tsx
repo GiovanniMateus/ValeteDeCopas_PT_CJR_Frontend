@@ -20,7 +20,7 @@ export default function Home() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
-    router.push("/");
+    router.push("/home");
   }
 
   return (
