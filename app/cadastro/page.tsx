@@ -1,90 +1,180 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation"; 
 
 export default function RegisterPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const [formData, setFormData] = useState({
+    nome: "",
+    username: "",
+    email: "",
+    senha: "",
+    confirmarSenha: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+
+    if (formData.senha !== formData.confirmarSenha) {
+      setError("As senhas não coincidem!");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3001/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            nome: formData.nome,
+            username: formData.username,
+            email: formData.email,
+            senha: formData.senha
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Erro ao criar conta");
+      }
+
+      alert("Conta criada com sucesso!");
+      router.push("/login");
+      
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="bg-[#f5f2e8] h-full flex items-center justify-center min-h-screen">
-        <div className="flex w-full max-w-6xl items-center justify-between">
-            {/* FORM */}
-            <div className="w-1/2 flex items-center justify-center">
-            <div className="bg-[#111111] w-654 h-[600px] my-35 mx-10 rounded-2xl flex flex-col items-center p-8 shadow-lg">
-                <h1 className="text-white font-bold text-xl mb-8">
-                CRIE SUA CONTA
-                </h1>
+    <div className="bg-[#f1f0e4] min-h-screen flex items-start justify-center pt-16 md:pt-24 p-6">
+      
+      <div className="flex w-full max-w-7xl items-start justify-center gap-10 lg:gap-20 flex-col-reverse lg:flex-row">
+        
+        {/* FORMULÁRIO */}
+        <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
+          <form
+            onSubmit={handleSubmit}
+            className="bg-[#1a1a1a] w-full max-w-[500px] rounded-3xl flex flex-col items-center p-10 md:p-12 shadow-2xl"
+          >
+            <h1 className="text-white font-bold text-2xl md:text-3xl mb-10 tracking-tight text-center">
+              CRIE SUA CONTA
+            </h1>
 
-                <div className="w-full space-y-3">
+            <div className="w-full space-y-4">
+              <input
+                required
+                name="nome"
+                value={formData.nome}
+                onChange={handleChange}
+                type="text"
+                placeholder="Nome Completo"
+                className="bg-[#f0ece2] w-full h-12 rounded-full px-6 text-gray-800 placeholder:text-gray-500 outline-none focus:ring-2 focus:ring-[#7c3aed]"
+              />
+
+              <input
+                required
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                type="text"
+                placeholder="Username"
+                className="bg-[#f0ece2] w-full h-12 rounded-full px-6 text-gray-800 placeholder:text-gray-500 outline-none focus:ring-2 focus:ring-[#7c3aed]"
+              />
+
+              <input
+                required
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                type="email"
+                placeholder="Email"
+                className="bg-[#f0ece2] w-full h-12 rounded-full px-6 text-gray-800 placeholder:text-gray-500 outline-none focus:ring-2 focus:ring-[#7c3aed]"
+              />
+
+              <div className="relative">
                 <input
-                    type="text"
-                    placeholder="Nome Completo"
-                    className="bg-[#F6F3E4] w-full h-9 rounded-full px-4 text-gray-700 outline-none"
+                  required
+                  name="senha"
+                  value={formData.senha}
+                  onChange={handleChange}
+                  type="password"
+                  placeholder="Senha"
+                  className="bg-[#f0ece2] w-full h-12 rounded-full px-6 text-gray-800 placeholder:text-gray-500 outline-none focus:ring-2 focus:ring-[#7c3aed]"
                 />
+                <span className="absolute right-6 top-3.5 text-gray-500 cursor-pointer">👁</span>
+              </div>
 
+              <div className="relative">
                 <input
-                    type="text"
-                    placeholder="Username"
-                    className="bg-[#F6F3E4] w-full h-9 rounded-full px-4 text-gray-700 outline-none"
+                  required
+                  name="confirmarSenha"
+                  value={formData.confirmarSenha}
+                  onChange={handleChange}
+                  type="password"
+                  placeholder="Confirmar Senha"
+                  className="bg-[#f0ece2] w-full h-12 rounded-full px-6 text-gray-800 placeholder:text-gray-500 outline-none focus:ring-2 focus:ring-[#7c3aed]"
                 />
-
-                <input
-                    type="email"
-                    placeholder="Email"
-                    className="bg-[#F6F3E4] w-full h-9 rounded-full px-4 text-gray-700 outline-none"
-                />
-
-                <div className="relative">
-                    <input
-                    type="password"
-                    placeholder="Senha"
-                    className="bg-[#F6F3E4] w-full h-9 rounded-full px-4 text-gray-700 outline-none"
-                    />
-                    <span className="absolute right-4 top-2 text-gray-400 cursor-pointer">
-                    👁
-                    </span>
-                </div>
-
-                <div className="relative">
-                    <input
-                    type="password"
-                    placeholder="Confirmar Senha"
-                    className="bg-[#F6F3E4] w-full h-9 rounded-full px-4 text-gray-700 outline-none"
-                    />
-                    <span className="absolute right-4 top-2 text-gray-400 cursor-pointer">
-                    👁
-                    </span>
-                </div>
-                </div>
-
-                <button className="mt-6 w-full h-10 rounded-full bg-[#5b2dff] text-white font-bold hover:bg-[#6A38F3] transition">
-                CRIAR CONTA
-                </button>
-
-                <p className="text-gray-300 text-sm mt-6">
-                Já possui uma conta?{" "}
-                <a href="#" className="text-[#5b2dff] font-semibold hover:underline">
-                    Login
-                </a>
-                </p>
-            </div>
+                <span className="absolute right-6 top-3.5 text-gray-500 cursor-pointer">👁</span>
+              </div>
             </div>
 
-            {/* DIREITA */}
-            <div className="h-screen overflow-hidden flex flex-col items-center justify-center relative">
-            <Image
-                        src="/logo.png"
-                        alt="Logo Stock.io"
-                        width={421}
-                        height={267}
-                        className="object-contain"
-                    />
+            <button
+              type="submit"
+              className="mt-8 w-full h-12 rounded-full bg-[#7c3aed] text-white font-bold text-lg hover:bg-[#6d28d9] transition-all"
+            >
+              CRIAR CONTA
+            </button>
 
-            <Image
-                        src="/cadastro.png"
-                        alt="cadastro"
-                        width={420}
-                        height={420}
-                        className="w-74 h-auto"
-                />
-            </div>
+            <p className="text-gray-400 text-sm mt-6">
+              Já possui uma conta?{" "}
+              <a href="/login" className="text-[#7c3aed] font-semibold hover:underline">
+                Login
+              </a>
+            </p>
+          </form>
         </div>
+
+        {/* LOGO E IMAGEM */}
+        <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-center justify-start lg:mt-10">
+          <div className="mb-10">
+            <Image
+              src="/logo.png"
+              alt="Logo Stock.io"
+              width={320}
+              height={120}
+              className="object-contain"
+              priority
+            />
+          </div>
+          
+          <div className="flex justify-center lg:justify-center w-full">
+            <Image
+              src="/cadastro.png"
+              alt="Ilustração Personagem Stock.io"
+              width={450}
+              height={450}
+              className="w-full max-w-[400px] h-auto object-contain"
+            />
+          </div>
+        </div>
+
+      </div>
     </div>
-    );
+  );
 }
