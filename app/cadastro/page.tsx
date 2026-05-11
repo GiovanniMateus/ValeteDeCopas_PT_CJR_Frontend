@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
+import { api } from "@/services/api";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -26,7 +27,6 @@ export default function RegisterPage() {
     setLoading(true);
     setError("");
 
-
     if (formData.senha !== formData.confirmarSenha) {
       setError("As senhas não coincidem!");
       setLoading(false);
@@ -34,36 +34,27 @@ export default function RegisterPage() {
     }
 
     try {
-      const response = await fetch("http://localhost:3001/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            nome: formData.nome,
-            username: formData.username,
-            email: formData.email,
-            senha: formData.senha
-        }),
+      await api.post("/users", {
+        nome: formData.nome,
+        username: formData.username,
+        email: formData.email,
+        senhaHash: formData.senha,
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Erro ao criar conta");
-      }
 
       alert("Conta criada com sucesso!");
       router.push("/login");
-      
+
     } catch (err: any) {
-      setError(err.message);
+      setError(
+        err.response?.data?.message || "Erro ao criar conta"
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="bg-[#f1f0e4] min-h-screen flex items-start justify-center pt-16 md:pt-24 p-6">
-      
+    <div className="bg-[#f1f0e4] min-h-screen flex items-start justify-center pt-16 md:pt-24 p-6">    
       <div className="flex w-full max-w-7xl items-start justify-center gap-10 lg:gap-20 flex-col-reverse lg:flex-row">
         
         {/* FORMULÁRIO */}
@@ -75,6 +66,12 @@ export default function RegisterPage() {
             <h1 className="text-white font-bold text-2xl md:text-3xl mb-10 tracking-tight text-center">
               CRIE SUA CONTA
             </h1>
+
+            {error && (
+              <p className="text-red-500 text-sm mb-4">
+                {error}
+              </p>
+            )}
 
             <div className="w-full space-y-4">
               <input
@@ -117,7 +114,9 @@ export default function RegisterPage() {
                   placeholder="Senha"
                   className="bg-[#f0ece2] w-full h-12 rounded-full px-6 text-gray-800 placeholder:text-gray-500 outline-none focus:ring-2 focus:ring-[#7c3aed]"
                 />
-                <span className="absolute right-6 top-3.5 text-gray-500 cursor-pointer">👁</span>
+                <span className="absolute right-6 top-3.5 text-gray-500 cursor-pointer">
+                  👁
+                </span>
               </div>
 
               <div className="relative">
@@ -130,20 +129,26 @@ export default function RegisterPage() {
                   placeholder="Confirmar Senha"
                   className="bg-[#f0ece2] w-full h-12 rounded-full px-6 text-gray-800 placeholder:text-gray-500 outline-none focus:ring-2 focus:ring-[#7c3aed]"
                 />
-                <span className="absolute right-6 top-3.5 text-gray-500 cursor-pointer">👁</span>
+                <span className="absolute right-6 top-3.5 text-gray-500 cursor-pointer">
+                  👁
+                </span>
               </div>
             </div>
 
             <button
               type="submit"
+              disabled={loading}
               className="mt-8 w-full h-12 rounded-full bg-[#7c3aed] text-white font-bold text-lg hover:bg-[#6d28d9] transition-all"
             >
-              CRIAR CONTA
+              {loading ? "CRIANDO..." : "CRIAR CONTA"}
             </button>
 
             <p className="text-gray-400 text-sm mt-6">
               Já possui uma conta?{" "}
-              <a href="/login" className="text-[#7c3aed] font-semibold hover:underline">
+              <a
+                href="/login"
+                className="text-[#7c3aed] font-semibold hover:underline"
+              >
                 Login
               </a>
             </p>
@@ -162,7 +167,7 @@ export default function RegisterPage() {
               priority
             />
           </div>
-          
+
           <div className="flex justify-center lg:justify-center w-full">
             <Image
               src="/cadastro.png"
