@@ -83,7 +83,20 @@ export default function Home() {
             })}
           </div>
         </div>
-        <CarrosselProdutos />
+        <CarrosselProdutos
+          titulo="Melhores avaliados"
+          endpoint="/produtos/melhores-avaliados"
+        />
+
+        <CarrosselProdutos
+          titulo="Mais baratos"
+          endpoint="/produtos/mais-baratos"
+        />
+
+        <CarrosselProdutos
+          titulo="Recém adicionados"
+          endpoint="/produtos/recem-adicionados"
+        />
       </div>
 
     </main>
