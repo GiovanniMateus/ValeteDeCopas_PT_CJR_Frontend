@@ -10,15 +10,22 @@ interface Produto {
   preco: number;
 }
 
-export default function CarrosselProdutos() {
+interface CarrosselProdutosProps {
+  titulo: string;
+  endpoint: string;
+}
+
+export default function CarrosselProdutos({
+  titulo,
+  endpoint,
+}: CarrosselProdutosProps) {
 
   const [produtos, setProdutos] = useState<Produto[]>([]);
 
   async function buscarProdutos() {
-
     try {
 
-      const response = await api.get("/produtos");
+      const response = await api.get(endpoint);
 
       setProdutos(response.data);
 
@@ -29,13 +36,13 @@ export default function CarrosselProdutos() {
 
   useEffect(() => {
     buscarProdutos();
-  }, []);
+  }, [endpoint]);
 
   return (
     <div className="mt-10">
 
       <h2 className="text-black text-3xl font-bold mb-6">
-        Produtos
+        {titulo}
       </h2>
 
       <div className="flex gap-4 overflow-x-auto pb-4">
@@ -65,6 +72,7 @@ export default function CarrosselProdutos() {
         ))}
 
       </div>
+
     </div>
   );
 }
