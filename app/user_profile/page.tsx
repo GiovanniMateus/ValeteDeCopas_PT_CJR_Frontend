@@ -4,8 +4,12 @@ import Image from "next/image";
 import Navbar from "../components/navbar3";
 import CarrosselProdutos from "../components/carrossel_produtos";
 import Link from "next/link";
+import { useState } from 'react';
+import ModalCriacaoLoja from '../components/modals/ModalCriarLoja'
 
 export default function Home() {
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <main className=" bg-[#F6F3E4]">
 
@@ -76,12 +80,15 @@ export default function Home() {
 
       <section className="px-10 pb-8 mt-10 ml-10">
 
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-4xl font-bold text-gray-900">Lojas</h2>
-          <Link href= "/" className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white text-2xl leading-none hover:bg-purple-700 transition">
-            +
-          </Link>
-        </div>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-4xl font-bold text-gray-900">Lojas</h2>
+        <button 
+          onClick={() => setIsModalOpen(true)}
+          className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white text-2xl leading-none hover:bg-purple-700 transition cursor-pointer"
+        >
+          +
+        </button>
+      </div>
 
       
         <div className="bg-white w-[600px] rounded-2xl px-11 py-11 flex items-center justify-between shadow-sm">
@@ -149,6 +156,11 @@ export default function Home() {
         </div>
 
       </section>
+
+
+      {isModalOpen && (
+        <ModalCriacaoLoja onClose={() => setIsModalOpen(false)} />
+      )}
 
     </main>
   );
