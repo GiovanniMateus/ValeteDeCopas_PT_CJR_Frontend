@@ -4,12 +4,28 @@ import Image from "next/image";
 import Navbar from "../components/navbar3";
 import CarrosselProdutos from "../components/carrossel_produtos";
 import Link from "next/link";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ModalCriacaoLoja from '../components/modals/ModalCriarLoja'
+import { useRouter } from 'next/navigation'; 
 
 export default function Home() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    
+    if (!token) {
+      router.push('/login');
+    } else {
+      setLoading(false);
+    }
+  }, [router]);
+
+  if (loading) return <div>Carregando...</div>;
   return (
     <main className=" bg-[#F6F3E4]">
 
@@ -72,10 +88,12 @@ export default function Home() {
         </div>
 
       </section>
-      <div className="ml-18 mb-10">
+      
+      {/*    
+      <div className="ml-18 mb-10">   Carrosel estava dando problemas e impossibilitando a pagina de rodar
         <CarrosselProdutos />
       </div>
-      
+      */}
 
 
       <section className="px-10 pb-8 mt-10 ml-10">
