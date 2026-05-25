@@ -21,6 +21,7 @@ export default function ModalCriarProduto({ onClose }: ModalCriarProdutoProps) {
   const [foto2, setFoto2] = useState<File | null>(null); 
   const [foto3, setFoto3] = useState<File | null>(null); 
   const [foto4, setFoto4] = useState<File | null>(null);
+  const [carregando, setCarregando] = useState(false);
 
   const handlePrecoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let valor = e.target.value.replace(/\D/g, '');
@@ -120,6 +121,8 @@ export default function ModalCriarProduto({ onClose }: ModalCriarProdutoProps) {
       return;
     }
 
+    setCarregando(true);
+
     const precoLimpo = preco.replace(/[^\d,]/g, '').replace(',', '.');
 
     const formData = new FormData();
@@ -147,13 +150,12 @@ export default function ModalCriarProduto({ onClose }: ModalCriarProdutoProps) {
       });
       setMensagemSucesso('Produto criado com sucesso!');
       
-      setTimeout(() => {
-        onClose();
-      }, 2500);
+      setTimeout(() => {onClose();}, 2500);
 
     } catch (error) {
       console.error('Erro ao criar produto:', error);
       alert('Erro ao criar produto. Verifique os dados e tente novamente');
+      setCarregando(false);
     }
   };
 
@@ -394,10 +396,12 @@ export default function ModalCriarProduto({ onClose }: ModalCriarProdutoProps) {
 
 
           <button 
-            type="button" onClick={handleSubmit}
-            className="mt-[20px] mb-[10px] w-[370px] h-[60px] rounded-full bg-[#7C3AED] text-white text-[24px] font-medium shadow-[0_10px_20px_rgba(124,58,237,0.4)] transition-colors cursor-pointer"
-          >
-            Adicionar
+            type="button" onClick={handleSubmit} disabled={carregando}
+           className={`mt-[20px] mb-[10px] w-[370px] h-[60px] rounded-full text-white text-[24px] font-medium 
+            transition-colors cursor-pointer ${
+            carregando ? 'bg-gray-400 cursor-not-allowed shadow-none' :
+            'bg-[#7C3AED] shadow-[0_10px_20px_rgba(124,58,237,0.4)]' }`}>
+            {carregando ? 'Adicionando...' : 'Adicionar'} 
           </button>
 
         

@@ -17,6 +17,8 @@ export default function ModalCriarLoja({ onClose }: ModalCriarLojaProps) {
   const [stickerFile, setStickerFile] = useState<File | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [bannerFile, setBannerFile] = useState<File | null>(null);
+  const [carregando, setCarregando] = useState(false);
+
 
   useEffect(() => {
   async function carregarCategorias() {
@@ -58,6 +60,8 @@ export default function ModalCriarLoja({ onClose }: ModalCriarLojaProps) {
     if (bannerFile) formData.append('banner', bannerFile);
     if (stickerFile) formData.append('sticker', stickerFile);
 
+    setCarregando(true);
+
     try {
       
       await axios.post('http://localhost:3001/lojas', formData, {
@@ -76,6 +80,8 @@ export default function ModalCriarLoja({ onClose }: ModalCriarLojaProps) {
     } catch (error) {
       console.error('Erro ao criar loja:', error);
       alert('Erro ao criar loja ');
+      setCarregando(false);
+
     }
   };
   
@@ -263,10 +269,12 @@ export default function ModalCriarLoja({ onClose }: ModalCriarLojaProps) {
 
 
           <button 
-            type="button" onClick={handleSubmit}
-            className="mt-[20px] mb-[10px] w-[370px] h-[60px] rounded-full bg-[#7C3AED] text-white text-[24px] font-medium shadow-[0_10px_20px_rgba(124,58,237,0.4)] transition-colors cursor-pointer"
-          >
-            Adicionar
+            type="button" onClick={handleSubmit} disabled={carregando}
+           className={`mt-[20px] mb-[10px] w-[370px] h-[60px] rounded-full text-white text-[24px] font-medium 
+            transition-colors cursor-pointer ${
+            carregando ? 'bg-gray-400 cursor-not-allowed shadow-none' :
+            'bg-[#7C3AED] shadow-[0_10px_20px_rgba(124,58,237,0.4)]' }`}>
+            {carregando ? 'Adicionando...' : 'Adicionar'} 
           </button>
 
           {mensagemSucesso && (

@@ -6,7 +6,6 @@ import CarrosselProdutos from "../components/carrossel_produtos";
 import Link from "next/link";
 import { useEffect, useState } from 'react';
 import ModalCriacaoLoja from '../components/modals/ModalCriarLoja'
-import ModalTeste from '../components/modals/ModalCriarProduto'
 
 import { useRouter } from 'next/navigation'; 
 
@@ -179,7 +178,7 @@ export default function Home() {
 
 
       {isModalOpen && (
-        <ModalTeste onClose={() => setIsModalOpen(false)} />
+        <ModalCriacaoLoja onClose={() => setIsModalOpen(false)} />
       )}
 
     </main>
