@@ -4,6 +4,7 @@ import Image from "next/image";
 import Navbar from "../components/navbar";
 import Pesquisa from "../components/pesquisa";
 import CarrosselProdutos from "../components/carrossel_produtos";
+import CarrosselLojas from "../components/carrossel_lojas";
 
 import {
   Shirt,
@@ -97,6 +98,8 @@ export default function Home() {
           titulo="Recém adicionados"
           endpoint="/produtos/recem-adicionados"
         />
+
+        <CarrosselLojas titulo="Lojas" />
       </div>
 
     </main>
