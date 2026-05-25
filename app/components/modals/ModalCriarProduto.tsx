@@ -89,18 +89,21 @@ export default function ModalCriarProduto({ onClose }: ModalCriarProdutoProps) {
     async function carregarSubCategorias() {
       try {
         
-        const response = await fetch('http://localhost:3001/categorias'); 
+        const response = await fetch('http://localhost:3001/subcategorias'); 
         if (response.ok) {
           const dados = await response.json();
+
           setSubCategorias(dados);
-        }
-      } catch (error) {
+            } 
+        } 
+        catch (error) {
         console.error('Erro ao buscar sub-categorias:', error);
       }
     }
     carregarSubCategorias();
     }, []);
   
+
     const handleSelecionarSubCategoria = (categoria: { id: number; nome: string }) => {
       setSubCategoriaSelecionada(categoria);
       setSubCategoriaAberta(false);
@@ -108,8 +111,40 @@ export default function ModalCriarProduto({ onClose }: ModalCriarProdutoProps) {
     
 
   const handleSubmit = async () => {
-    
+    if (!foto1 && !foto2 && !foto3 && !foto4) {
+      alert("Por favor, anexe pelo menos uma foto do produto");
+      return;
+    }
+    if (!nome || !descricao || !preco || !subCategoriaSelecionada || quantidade === '') {
+      alert("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    const precoLimpo = preco.replace(/[^\d,]/g, '').replace(',', '.');
+
+    const formData = new FormData();
+    formData.append('nome', nome);
+    formData.append('descricao', descricao);
+    formData.append('subcategoriaId', String(subCategoriaSelecionada.id));
+    formData.append('preco', precoLimpo);
+    formData.append('estoque', String(quantidade));
+
+    // OBS: como a página de loja ainda não foi desenvolvida, é necessário implementar a lógica para pegar o id
+    // referente a essa loja, aqui estou passando um id padrão 1
+    formData.append('lojaId', '1'); 
+
+    if (foto1) formData.append('imagens', foto1);
+    if (foto2) formData.append('imagens', foto2);
+    if (foto3) formData.append('imagens', foto3);
+    if (foto4) formData.append('imagens', foto4);
+
     try {
+        await axios.post('http://localhost:3001/produtos', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
       setMensagemSucesso('Produto criado com sucesso!');
       
       setTimeout(() => {
@@ -118,7 +153,7 @@ export default function ModalCriarProduto({ onClose }: ModalCriarProdutoProps) {
 
     } catch (error) {
       console.error('Erro ao criar produto:', error);
-      alert('Erro ao criar produto');
+      alert('Erro ao criar produto. Verifique os dados e tente novamente');
     }
   };
 
@@ -325,7 +360,7 @@ export default function ModalCriarProduto({ onClose }: ModalCriarProdutoProps) {
         />
 
 
-        {/*quantidade estoque: valor máximo 999 */}
+        {/*quantidade estoque: valor máximo 9999 */}
         <div className="flex items-center justify-center gap-[60px] mt-[15px] mb-[10px]">
   
             <button 
