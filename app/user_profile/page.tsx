@@ -6,6 +6,7 @@ import CarrosselProdutos from "../components/carrossel_produtos";
 import Link from "next/link";
 import { useEffect, useState } from 'react';
 import ModalCriacaoLoja from '../components/modals/ModalCriarLoja'
+
 import { useRouter } from 'next/navigation'; 
 
 export default function Home() {
