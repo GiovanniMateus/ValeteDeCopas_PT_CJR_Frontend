@@ -57,16 +57,27 @@ export default function Navbar() {
         ) : (
             <>
             <Link
-                href="/home"
-                className="bg-black text-black px-6 py-3 rounded-full font-semibold hover:scale-105 transition"
+                href="/user_profile"
+                
+                className="group relative px-6 py-3 rounded-full hover:scale-105 transition flex items-center justify-center"
             >
+
                 <Image
-                src="/ion_person.png"
+                src="/ion_person_white.svg"
                 alt="Perfil"
                 width={35}
                 height={35}
-                className="object-contain"
+                className="object-contain group-hover:hidden"
                 />
+
+                <Image
+                src="/ion_person.svg"
+                alt="Perfil"
+                width={35}
+                height={35}
+                className="object-contain hidden group-hover:block"
+                />
+
             </Link>
 
             <Link
