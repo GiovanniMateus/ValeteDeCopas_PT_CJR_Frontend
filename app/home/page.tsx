@@ -4,6 +4,7 @@ import Image from "next/image";
 import Navbar from "../components/navbar";
 import Pesquisa from "../components/pesquisa";
 import CarrosselProdutos from "../components/carrossel_produtos";
+import CarrosselLojas from "../components/carrossel_lojas";
 
 import {
   Shirt,
@@ -84,19 +85,24 @@ export default function Home() {
           </div>
         </div>
         <CarrosselProdutos
-          titulo="Melhores avaliados"
+          titulo="Produtos"
+          subtitulo="melhores avaliados"
           endpoint="/produtos/melhores-avaliados"
         />
 
         <CarrosselProdutos
-          titulo="Mais baratos"
+          titulo="Produtos"
+          subtitulo="mais baratos"
           endpoint="/produtos/mais-baratos"
         />
 
         <CarrosselProdutos
-          titulo="Recém adicionados"
+          titulo="Produtos"
+          subtitulo="recém adicionados"
           endpoint="/produtos/recem-adicionados"
         />
+
+        <CarrosselLojas titulo="Lojas" />
       </div>
 
     </main>
