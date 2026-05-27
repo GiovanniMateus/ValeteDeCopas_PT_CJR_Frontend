@@ -15,9 +15,13 @@ interface Loja {
 
 interface Props {
   titulo: string;
+  categoriasSelecionadas: string[];
 }
 
-export default function CarrosselLojas({ titulo }: Props) {
+export default function CarrosselLojas({
+  titulo,
+  categoriasSelecionadas
+}: Props) {
 
   const [lojas, setLojas] = useState<Loja[]>([]);
 
@@ -38,8 +42,19 @@ export default function CarrosselLojas({ titulo }: Props) {
     buscarLojas();
   }, []);
 
+  const lojasFiltradas =
+    categoriasSelecionadas.length === 0
+      ? lojas
+      : lojas.filter((loja) =>
+          categoriasSelecionadas.some(
+            (categoria) =>
+              categoria.toLowerCase() ===
+              loja.categoria?.nome?.toLowerCase()
+          )
+        );
+
   return (
-    <div className="mt-14">
+    <div>
 
       <h2 className="text-black text-3xl font-bold mb-8">
         {titulo}
@@ -49,7 +64,7 @@ export default function CarrosselLojas({ titulo }: Props) {
 
         <div className="flex gap-10 min-w-max pb-4">
 
-          {lojas.map((loja) => (
+          {lojasFiltradas.map((loja) => (
 
             <div
               key={loja.id}
