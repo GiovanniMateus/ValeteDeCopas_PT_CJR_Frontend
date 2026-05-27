@@ -57,7 +57,7 @@ export default function Navbar() {
         ) : (
           <>
             <Link
-              href="/user_profile "
+              href="/perfil"
               className="bg-white text-black px-6 py-3 rounded-full font-semibold hover:scale-105 transition"
             >
               PERFIL
