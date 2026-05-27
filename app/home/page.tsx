@@ -1,10 +1,13 @@
 'use client'
 
+import { useState } from "react";
 import Image from "next/image";
+
 import Navbar from "../components/navbar";
 import Pesquisa from "../components/pesquisa";
 import CarrosselProdutos from "../components/carrossel_produtos";
 import CarrosselLojas from "../components/carrossel_lojas";
+import FiltroCategoria from "../components/filtro_categoria";
 
 import {
   Shirt,
@@ -29,6 +32,9 @@ const categories = [
 ];
 
 export default function Home() {
+
+  const [categoriasSelecionadas, setCategoriasSelecionadas] = useState<string[]>([]);
+
   return (
     <main className="min-h-screen bg-white">
 
@@ -38,7 +44,9 @@ export default function Home() {
 
         <div className="text-white max-w-md">
           <h1 className="text-4xl font-bold leading-tight">
-            Do CAOS à organização<br />em alguns cliques
+            Do CAOS à organização
+            <br />
+            em alguns cliques
           </h1>
         </div>
 
@@ -55,18 +63,22 @@ export default function Home() {
 
       </section>
 
-
       <div className="bg-[#F6F3E4] min-h-[400px] px-6 py-8">
+
         <div className="flex justify-end">
           <Pesquisa />
         </div>
+
         <h1 className="text-black text-3xl font-bold pt-8">
           Categorias
         </h1>
 
         <div className="mt-8 overflow-x-auto pb-4">
+
           <div className="flex gap-4 min-w-max">
+
             {categories.map((category) => {
+
               const Icon = category.icon;
 
               return (
@@ -74,16 +86,21 @@ export default function Home() {
                   key={category.name}
                   className="flex flex-col items-center min-w-[170px] rounded-3xl bg-white p-4 shadow-sm"
                 >
+
                   <Icon className="w-20 h-20 text-black" />
 
                   <span className="mt-3 text-center text-base font-semibold text-black">
                     {category.name}
                   </span>
+
                 </div>
               );
             })}
+
           </div>
+
         </div>
+
         <CarrosselProdutos
           titulo="Produtos"
           subtitulo="melhores avaliados"
@@ -102,7 +119,22 @@ export default function Home() {
           endpoint="/produtos/recem-adicionados"
         />
 
-        <CarrosselLojas titulo="Lojas" />
+        <div className="flex justify-between items-start mt-16 gap-10">
+
+          <div className="flex-1">
+            <CarrosselLojas
+              titulo="Lojas"
+              categoriasSelecionadas={categoriasSelecionadas}
+            />
+          </div>
+
+          <FiltroCategoria
+            categoriasSelecionadas={categoriasSelecionadas}
+            setCategoriasSelecionadas={setCategoriasSelecionadas}
+          />
+
+        </div>
+
       </div>
 
     </main>
