@@ -26,7 +26,6 @@ export default function Navbar() {
   return (
     <nav className="h-[92px] w-full bg-black flex items-center justify-between px-8">
 
-  
       <Image
         src="/Stockio.png"
         alt="Logo"
@@ -35,63 +34,61 @@ export default function Navbar() {
         className="object-contain"
       />
 
-      {/* BOTÕES */}
       <div className="flex items-center gap-6">
 
         {!user ? (
-            <>
+          <>
             <Link
-                href="/login"
-                className="bg-white text-black px-6 py-3 rounded-full font-semibold hover:scale-105 transition"
+              href="/login"
+              className="bg-white text-black px-6 py-3 rounded-full font-semibold hover:scale-105 transition"
             >
-                LOGIN
+              LOGIN
             </Link>
 
             <Link
-                href="/cadastro"
-                className="bg-purple-600 text-white px-6 py-3 rounded-full font-semibold hover:scale-105 transition"
+              href="/cadastro"
+              className="bg-purple-600 text-white px-6 py-3 rounded-full font-semibold hover:scale-105 transition"
             >
-                CADASTRE-SE
+              CADASTRE-SE
             </Link>
-            </>
+          </>
         ) : (
-            <>
+          <>
+            {/* ✅ link corrigido: /user_profile/${user.id} em vez de /home */}
             <Link
-                href="/home"
-                className="bg-black text-black px-6 py-3 rounded-full font-semibold hover:scale-105 transition"
+              href={`/user_profile/${user.id}`}
+              className="bg-black text-black px-6 py-3 rounded-full font-semibold hover:scale-105 transition"
             >
-                <Image
+              <Image
                 src="/ion_person.png"
                 alt="Perfil"
                 width={35}
                 height={35}
                 className="object-contain"
-                />
+              />
             </Link>
 
             <Link
-                href="/home"
-                onClick={handleLogout}
-                className="group relative px-6 py-3 rounded-full hover:scale-105 transition flex items-center justify-center"
+              href="/home"
+              onClick={handleLogout}
+              className="group relative px-6 py-3 rounded-full hover:scale-105 transition flex items-center justify-center"
             >
-
-                <Image
+              <Image
                 src="/arrow-exit.svg"
                 alt="Logout"
                 width={28}
                 height={27}
                 className="object-contain group-hover:hidden"
-                />
-
-                <Image
+              />
+              <Image
                 src="/arrow-red.svg"
                 alt="Logout"
                 width={28}
                 height={27}
                 className="object-contain hidden group-hover:block"
-                />
+              />
             </Link>
-            </>
+          </>
         )}
 
       </div>

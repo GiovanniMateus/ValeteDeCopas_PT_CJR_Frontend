@@ -1,25 +1,17 @@
 'use client'
 
 import Image from "next/image";
-import Navbar from "../components/navbar4";
-import Pesquisa from "../components/pesquisa";
-import CarrosselProdutos from "../components/carrossel_produtos";
+import { useParams } from "next/navigation";
+import Navbar from "../../components/navbar4";
+import Pesquisa from "../../components/pesquisa";
+import CarrosselProdutos from "../../components/carrossel_produtos";
+import CarrosselLojasCategoria from "../../components/carrossel_lojas_categoria";
 
+export default function CategoriaEspecifica() {
 
-import {
-  Shirt,
-  Gamepad2,
-  House,
-  Smartphone,
-  Pill,
-  ShoppingBasket,
-  Sparkles,
-  ToyBrick
-} from "lucide-react";
+  const params = useParams();
+  const categoriaId = Number(params.id);
 
-
-
-export default function Home() {
   return (
     <main className="min-h-screen bg-white">
 
@@ -27,8 +19,8 @@ export default function Home() {
 
       <section className="w-full bg-black h-[447px] flex items-center justify-between px-10 overflow-hidden">
 
-        <div className="text-white pl-40">
-          <h1 className="text-6xl font-bold ">
+        <div className="text-white pl-40 flex flex-col justify-end h-full pb-10">
+          <h1 className="text-6xl font-bold">
             O universo da tecnologia<br />em um só lugar
           </h1>
         </div>
@@ -46,26 +38,35 @@ export default function Home() {
 
       </section>
 
-
       <div className="bg-[#F6F3E4] min-h-[400px] px-6 py-8">
+
         <div className="flex justify-end">
           <Pesquisa />
         </div>
- 
-        <CarrosselProdutos
-          titulo="Melhores avaliados"
-          endpoint="/produtos/melhores-avaliados"
-        />
+
+        <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
+            <CarrosselLojasCategoria
+              categoriaId={categoriaId}
+              titulo="Principais Lojas"
+            />
+        </div>
+
+
+
+     
+        
+
 
         <CarrosselProdutos
-          titulo="Mais baratos"
-          endpoint="/produtos/mais-baratos"
+          titulo="Mais populares"
+          endpoint={`/produtos/melhores-avaliados?categoriaId=${categoriaId}`}
         />
 
         <CarrosselProdutos
           titulo="Recém adicionados"
-          endpoint="/produtos/recem-adicionados"
+          endpoint={`/produtos/recem-adicionados?categoriaId=${categoriaId}`}
         />
+
       </div>
 
     </main>
