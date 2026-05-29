@@ -19,12 +19,14 @@ interface CarrosselProdutosProps {
   titulo: string;
   subtitulo?: string;
   endpoint: string;
+  pesquisa?: string;
 }
 
 export default function CarrosselProdutos({
   titulo,
   subtitulo,
   endpoint,
+  pesquisa,
 }: CarrosselProdutosProps) {
 
   const [produtos, setProdutos] = useState<Produto[]>([]);
@@ -33,7 +35,11 @@ export default function CarrosselProdutos({
 
     try {
 
-      const response = await api.get(endpoint);
+      const response = await api.get(endpoint, {
+        params: {
+          search: pesquisa
+        }
+      });
 
       setProdutos(response.data);
 
@@ -44,7 +50,7 @@ export default function CarrosselProdutos({
 
   useEffect(() => {
     buscarProdutos();
-  }, [endpoint]);
+  }, [endpoint, pesquisa]);
 
   return (
     <div className="mt-12">

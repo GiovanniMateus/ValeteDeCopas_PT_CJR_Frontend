@@ -19,6 +19,7 @@ import {
   Sparkles,
   ToyBrick
 } from "lucide-react";
+import ListaProdutos from "../components/lista_produtos";
 
 const categories = [
   { name: "Beleza", icon: Sparkles },
@@ -34,7 +35,7 @@ const categories = [
 export default function Home() {
 
   const [categoriasSelecionadas, setCategoriasSelecionadas] = useState<string[]>([]);
-
+  const [pesquisa, setPesquisa] = useState("");
   return (
     <main className="min-h-screen bg-white">
 
@@ -66,7 +67,7 @@ export default function Home() {
       <div className="bg-[#F6F3E4] min-h-[400px] px-6 py-8">
 
         <div className="flex justify-end">
-          <Pesquisa />
+          <Pesquisa pesquisa={pesquisa} setPesquisa={setPesquisa} />
         </div>
 
         <h1 className="text-black text-3xl font-bold pt-8">
@@ -100,24 +101,30 @@ export default function Home() {
 
         </div>
 
-        <CarrosselProdutos
-          titulo="Produtos"
-          subtitulo="melhores avaliados"
-          endpoint="/produtos/melhores-avaliados"
-        />
+        {pesquisa.trim() === "" ? (
+          <>
+            <CarrosselProdutos
+              titulo="Produtos"
+              subtitulo="melhores avaliados"
+              endpoint="/produtos/melhores-avaliados"
+            />
 
-        <CarrosselProdutos
-          titulo="Produtos"
-          subtitulo="mais baratos"
-          endpoint="/produtos/mais-baratos"
-        />
+            <CarrosselProdutos
+              titulo="Produtos"
+              subtitulo="mais baratos"
+              endpoint="/produtos/mais-baratos"
+            />
 
-        <CarrosselProdutos
-          titulo="Produtos"
-          subtitulo="recém adicionados"
-          endpoint="/produtos/recem-adicionados"
-        />
-
+            <CarrosselProdutos
+              titulo="Produtos"
+              subtitulo="recém adicionados"
+              endpoint="/produtos/recem-adicionados"
+            />
+          </>
+          ) : (
+          <ListaProdutos pesquisa={pesquisa} />
+        )}
+        
         <div className="flex justify-between items-start mt-16 gap-10">
 
           <div className="flex-1">
