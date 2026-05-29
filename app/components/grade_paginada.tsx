@@ -10,7 +10,7 @@ interface GradePaginadaProps {
   pesquisa?: string;
 }
 
-const ORDENACOES = ["Relevância", "Menor preço", "Maior preço"];
+const ORDENACOES = ["Mais Recentes", "Menor preço", "Maior preço"];
 
 interface Subcategoria {
   id: number;
