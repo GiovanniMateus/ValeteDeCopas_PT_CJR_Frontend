@@ -1,7 +1,7 @@
 'use client'
 
 import Image from "next/image";
-import Navbar from "../components/navbar3";
+import Navbar from "../components/navbar";
 import CarrosselProdutos from "../components/carrossel_produtos";
 import Link from "next/link";
 import { useEffect, useState } from 'react';
