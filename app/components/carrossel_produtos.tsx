@@ -35,7 +35,7 @@ export default function CarrosselProdutos({
 
       const response = await api.get(endpoint);
 
-      setProdutos(response.data);
+    setProdutos(Array.isArray(response.data) ? response.data : response.data.content ?? response.data);
 
     } catch (error) {
       console.error(error);
