@@ -6,6 +6,7 @@ import Navbar from "../../components/navbar4";
 import Pesquisa from "../../components/pesquisa";
 import CarrosselProdutos from "../../components/carrossel_produtos";
 import CarrosselLojasCategoria from "../../components/carrossel_lojas_categoria";
+import GradePaginada from "@/app/components/grade_paginada";
 
 export default function CategoriaEspecifica() {
 
@@ -44,6 +45,9 @@ export default function CategoriaEspecifica() {
           <Pesquisa />
         </div>
 
+       <GradePaginada categoriaId={categoriaId} />        
+
+
         <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
             <CarrosselLojasCategoria
               categoriaId={categoriaId}
@@ -54,8 +58,6 @@ export default function CategoriaEspecifica() {
 
 
      
-        
-
 
         <CarrosselProdutos
           titulo="Mais populares"

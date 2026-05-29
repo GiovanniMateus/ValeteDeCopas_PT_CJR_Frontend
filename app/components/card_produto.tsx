@@ -17,7 +17,7 @@ interface ProdutoCardProps {
 
 export default function ProdutoCard({ produto }: ProdutoCardProps) {
   return (
-    <div className="bg-[#F8F8F8] rounded-[40px] w-[290px] h-[420px] p-7 flex flex-col">
+    <div className="bg-[#F8F8F8] rounded-[40px] w-[250px] h-[380px] p-7 flex flex-col">
 
         {/* IMAGEM */}
         <div className="relative w-full h-[220px]">
