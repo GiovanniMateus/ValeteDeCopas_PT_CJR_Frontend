@@ -1,19 +1,24 @@
 'use client'
 
 import Image from "next/image";
-import Navbar from "../components/navbar";
-import CarrosselProdutos from "../components/carrossel_produtos";
+
+import Navbar from "../../components/navbar";
+import CarrosselProdutos from "../../components/carrossel_produtos";
 import Link from "next/link";
 import { useEffect, useState } from 'react';
-import ModalCriacaoLoja from '../components/modals/ModalCriarLoja';
-import AvaliacoesUsuario from '../components/carrossel_avaliacoes';
-import LojasUsuario from '../components/carrossel_lojas_usuario';
-import { useRouter } from 'next/navigation';
+import ModalCriacaoLoja from '../../components/modals/ModalCriarLoja';
+import ModalCriarProduto from "@/app/components/modals/ModalCriarProduto";
+import AvaliacoesUsuario from '../../components/carrossel_avaliacoes';
+import LojasUsuario from '../../components/carrossel_lojas_usuario';
+import { useRouter, useParams } from 'next/navigation'; 
+import ModalCriarLoja from "../../components/modals/ModalCriarLoja";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userId, setUserId] = useState<number | null>(null);
   const router = useRouter();
+  const params = useParams();                      
+  const perfilId = Number(params.id);               
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,7 +28,6 @@ export default function Home() {
       return;
     }
 
-    // pega o userId do usuário logado para passar ao carrossel
     const userRaw = localStorage.getItem('user');
     if (userRaw) {
       const user = JSON.parse(userRaw);
@@ -55,7 +59,7 @@ export default function Home() {
           </Link>
 
           <div className="w-[230px] h-[230px] rounded-full overflow-hidden">
-            {/* 📸 FOTO: /public/foto_de_perfil.png */}
+          
             <Image
               src="/foto_de_perfil.png"
               alt="Foto de perfil"
@@ -87,7 +91,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* carrossel com produtos das lojas do usuário logado */}
       {userId && (
         <div className="ml-10 px-10">
           <CarrosselProdutos
@@ -98,14 +101,12 @@ export default function Home() {
         </div>
       )}
 
-      {/* lojas do usuário logado, filtradas por userId */}
       <LojasUsuario onAbrirModal={() => setIsModalOpen(true)} />
 
-      {/* avaliações de loja do usuário logado */}
       <AvaliacoesUsuario />
 
       {isModalOpen && (
-        <ModalCriacaoLoja onClose={() => setIsModalOpen(false)} />
+        <ModalCriarLoja onClose={() => setIsModalOpen(false)} />
       )}
 
     </main>

@@ -33,7 +33,7 @@ export default function Navbar() {
   return (
     <nav className="h-[92px] w-full bg-black flex items-center justify-between px-8">
 
-      {/* LOGO */}
+     
       <Link href="/home">
 
         <Image
@@ -46,7 +46,7 @@ export default function Navbar() {
 
       </Link>
 
-      {/* BOTÕES */}
+ 
       <div className="flex items-center gap-6">
 
         {!user ? (
@@ -90,7 +90,7 @@ export default function Navbar() {
           <>
             {/* PERFIL */}
             <Link
-              href="/user_profile"
+              href={`/user_profile/${user?.id}`}
               className="
                 group
                 relative
