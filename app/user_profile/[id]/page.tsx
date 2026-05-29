@@ -105,7 +105,7 @@ export default function Home() {
       <AvaliacoesUsuario />
 
       {isModalOpen && (
-        <ModalCriarLoja onClose={() => setIsModalOpen(false)} />
+        <ModalCriarProduto onClose={() => setIsModalOpen(false)} />
       )}
 
     </main>

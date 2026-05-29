@@ -3,12 +3,11 @@
 import { useEffect, useState } from "react";
 import { api } from "@/services/api";
 import ProdutoCard, { Produto } from "./card_produto";
-
+import Image from "next/image"; 
 interface GradePaginadaProps {
   categoriaId: number;
 }
 
-//const SUBCATEGORIAS = ["Celulares", "Notebooks", "TVs", "Acessórios", "Outros"];
 const ORDENACOES = ["Relevância", "Menor preço", "Maior preço"];
 
 interface Subcategoria {
@@ -23,8 +22,7 @@ export default function GradePaginada({ categoriaId }: GradePaginadaProps) {
   const [totalPaginas, setTotalPaginas] = useState(1);
   const [listaSubcategorias, setListaSubcategorias] = useState<Subcategoria[]>([]);
   const [subcategoriaSelecionada, setSubcategoriaSelecionada] = useState<number | null>(null);
-  
-  const [subcategoria, setSubcategoria] = useState<string | null>(null);
+  const [isOrdenacaoMenuOpen, setIsOrdenacaoMenuOpen] = useState(false);
   const [ordenacao, setOrdenacao] = useState("Relevância");
 
   const ITENS_POR_PAGINA = 15;
@@ -61,6 +59,7 @@ export default function GradePaginada({ categoriaId }: GradePaginadaProps) {
         params: {
           categoriaId,
           subcategoriaId: subcategoriaSelecionada, 
+          ordenacao: ordenacao,
           page: pagina, 
           size: ITENS_POR_PAGINA,
         },
@@ -76,25 +75,24 @@ export default function GradePaginada({ categoriaId }: GradePaginadaProps) {
     if (categoriaId && !isNaN(categoriaId)) {
       buscarProdutos(paginaAtual);
     }
-  }, [categoriaId, paginaAtual,subcategoriaSelecionada]);
+  }, [categoriaId, paginaAtual,subcategoriaSelecionada, ordenacao]);
 
 
   useEffect(() => {
     setPaginaAtual(1);
-  }, [subcategoriaSelecionada]);
+  }, [subcategoriaSelecionada, ordenacao]);
 
 
   function handlePagina(pagina: number) {
     if (pagina < 1 || pagina > totalPaginas) return;
     setPaginaAtual(pagina);
     
-    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
 
 
   return (
-    <div className="flex flex-col w-fit mx-auto mt-12 mb-20 ">
+    <div className="flex flex-col w-fit mx-auto mt-12 mb-20 min-h-[800px] " style={{ overflowAnchor: 'none' }}>
       
         {/*Filtros */}
         <div className="flex items-center justify-between w-full mb-10 ">
@@ -105,29 +103,67 @@ export default function GradePaginada({ categoriaId }: GradePaginadaProps) {
                 <button
                 key={sub.id}
                 onClick={() => setSubcategoriaSelecionada(subcategoriaSelecionada === sub.id ? null : sub.id)}
-                className={`px-6 py-2 rounded-full text-sm font-medium border transition whitespace-nowrap cursor-pointer
-                    ${subcategoriaSelecionada === sub.id
-                    ? "bg-black text-white border-black"
-                    : "bg-white text-black border-gray-300 hover:border-gray-500"
-                    }`}
-                >
+                className={`h-11 px-6 flex items-center justify-center rounded-full text-sm font-medium border transition whitespace-nowrap cursor-pointer
+                ${subcategoriaSelecionada === sub.id
+                ? "bg-[#4D9DE0] text-white border-[#4D9DE0]" 
+                : "bg-white text-[#4D9DE0] border-[#4D9DE0]/30 hover:border-[#4D9DE0]"
+                }`}
+                            >
                 {sub.nome}
                 </button>
             ))}
             </div>
 
         {/*ordenação de produtos */}
-            <div className="flex items-center ">
-            <select
-                value={ordenacao}
-                onChange={(e) => setOrdenacao(e.target.value)}
-                className="bg-white border border-gray-300 rounded-full px-4 py-2 text-sm text-black outline-none cursor-pointer hover:border-gray-500 transition"
-            >
-                {ORDENACOES.map((op) => (
-                <option key={op} value={op}>{op}</option>
-                ))}
-            </select>
-        </div>
+          {produtos.length > 0 && (
+            <div className="flex items-center gap-3 relative">
+            
+            <span className="text-sm font-medium text-black"></span>
+
+            <div className="relative">
+              
+              <button
+                onClick={() => setIsOrdenacaoMenuOpen(!isOrdenacaoMenuOpen)}
+                className="w-[450px] h-11 px-6 flex items-center justify-between bg-white border border-gray-200 rounded-full  font-medium text-[#4D9DE0] shadow-sm outline-none cursor-pointer hover:border-gray-300 transition-all"              >
+    
+                <span>
+                    Ordenar por: <span className="font-bold">{ordenacao}</span>
+                </span>
+                <Image
+                    src="/down_arrow.png" 
+                    alt="Ícone de Ordenação"
+                    width={20}                    
+                    height={20}                  
+                    className="object-contain" 
+                    />
+                    
+              </button>
+
+              {/* Menu de opções */}
+              {isOrdenacaoMenuOpen && (
+                <ul className="absolute top-full right-0 mt-2 w-full min-w-[200px] bg-white border border-gray-200 rounded-2xl shadow-lg z-50 py-2">
+                  {ORDENACOES.map((op) => (
+                    <li key={op}>
+                      <button
+                        onClick={() => {
+                          setOrdenacao(op);
+                          setIsOrdenacaoMenuOpen(false);
+                        }}
+                        className={`w-full text-left px-6 py-3 text-sm transition ${
+                          ordenacao === op
+                            ? 'bg-sky-50 text-sky-600 font-semibold'
+                            : 'text-gray-700 hover:bg-gray-100'
+                        }`}
+                      >
+                        {op}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        )} 
     </div>
 
       {produtos.length === 0 ? (
