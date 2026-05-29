@@ -2,16 +2,18 @@
 
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import Navbar from "../../components/navbar4";
+import Navbar from "../../components/navbar_tela_categoria_especifica";
 import Pesquisa from "../../components/pesquisa";
 import CarrosselProdutos from "../../components/carrossel_produtos";
 import CarrosselLojasCategoria from "../../components/carrossel_lojas_categoria";
 import GradePaginada from "@/app/components/grade_paginada";
+import { useState } from "react";
 
 export default function CategoriaEspecifica() {
 
   const params = useParams();
   const categoriaId = Number(params.id);
+  const [pesquisa, setPesquisa] = useState('');
 
   return (
     <main className="min-h-screen bg-white">
@@ -42,10 +44,10 @@ export default function CategoriaEspecifica() {
       <div className="bg-[#F6F3E4] min-h-[400px] px-6 py-8">
 
         <div className="flex justify-end">
-          <Pesquisa />
+          <Pesquisa pesquisa={pesquisa} setPesquisa={setPesquisa} />
         </div>
 
-       <GradePaginada categoriaId={categoriaId} />        
+       <GradePaginada categoriaId={categoriaId} pesquisa={pesquisa} />        
 
 
         <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">

@@ -32,7 +32,7 @@ export default function ListaProdutos({ pesquisa }: Props) {
         },
       });
 
-      setProdutos(response.data);
+      setProdutos(response.data.content ?? response.data);
 
     } catch (error) {
       console.error(error);

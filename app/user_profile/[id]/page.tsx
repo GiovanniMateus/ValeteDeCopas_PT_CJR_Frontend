@@ -59,7 +59,7 @@ export default function Home() {
           </Link>
 
           <div className="w-[230px] h-[230px] rounded-full overflow-hidden">
-            {/* 📸 FOTO: /public/foto_de_perfil.png */}
+          
             <Image
               src="/foto_de_perfil.png"
               alt="Foto de perfil"
@@ -106,7 +106,7 @@ export default function Home() {
       <AvaliacoesUsuario />
 
       {isModalOpen && (
-        <ModalCriarProduto onClose={() => setIsModalOpen(false)} />
+        <ModalCriarLoja onClose={() => setIsModalOpen(false)} />
       )}
 
     </main>
