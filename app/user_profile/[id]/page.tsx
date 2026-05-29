@@ -10,6 +10,7 @@ import ModalCriarProduto from "@/app/components/modals/ModalCriarProduto";
 import AvaliacoesUsuario from '../../components/carrossel_avaliacoes';
 import LojasUsuario from '../../components/carrossel_lojas_usuario';
 import { useRouter, useParams } from 'next/navigation'; // ✅ useParams importado aqui
+import ModalCriarLoja from "../../components/modals/ModalCriarLoja";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -104,7 +105,7 @@ export default function Home() {
       <AvaliacoesUsuario />
 
       {isModalOpen && (
-        <ModalCriarProduto onClose={() => setIsModalOpen(false)} />
+        <ModalCriarLoja onClose={() => setIsModalOpen(false)} />
       )}
 
     </main>

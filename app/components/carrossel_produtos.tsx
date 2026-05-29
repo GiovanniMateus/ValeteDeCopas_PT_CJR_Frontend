@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { api } from "@/services/api";
+import ProdutoCard from "./card_produto"; 
 
 interface Produto {
   id: number;
@@ -73,51 +74,7 @@ export default function CarrosselProdutos({
             key={produto.id}
             className="min-w-[290px]"
           >
-
-            {/* CARD */}
-            <div className="bg-[#F8F8F8] rounded-[40px] w-[290px] h-[420px] p-7 flex flex-col">
-
-              {/* IMAGEM */}
-              <div className="relative w-full h-[220px]">
-
-                <Image
-                  src={
-                    produto.imagens?.[0]?.urlImagem ||
-                    "/produto-placeholder.png"
-                  }
-                  alt={produto.nome}
-                  fill
-                  className="object-contain"
-                />
-
-              </div>
-
-              {/* INFO */}
-              <div className="mt-auto">
-
-                <h3 className="text-black text-[30px] font-semibold leading-tight">
-                  {produto.nome}
-                </h3>
-
-                <p className="text-black text-[24px] font-medium mt-1">
-                  R${produto.preco.toFixed(2).replace(".", ",")}
-                </p>
-
-                <p
-                  className={`text-[18px] font-medium mt-2 ${
-                    produto.estoque > 0
-                      ? "text-[#B7E000]"
-                      : "text-[#D90429]"
-                  }`}
-                >
-                  {produto.estoque > 0
-                    ? "DISPONÍVEL"
-                    : "INDISPONÍVEL"}
-                </p>
-
-              </div>
-
-            </div>
+            <ProdutoCard produto={produto} /> 
 
           </div>
         ))}
