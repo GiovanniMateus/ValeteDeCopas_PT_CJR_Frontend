@@ -1,11 +1,10 @@
 'use client'
 
 import Image from "next/image";
-import Navbar from "../components/navbar4";
+import Navbar from "../components/navbar";
 import Pesquisa from "../components/pesquisa";
 import CarrosselProdutos from "../components/carrossel_produtos";
-
-
+import { useState } from "react";
 import {
   Shirt,
   Gamepad2,
@@ -18,8 +17,9 @@ import {
 } from "lucide-react";
 
 
-
 export default function Home() {
+  const [pesquisa, setPesquisa] = useState("");
+
   return (
     <main className="min-h-screen bg-white">
 
@@ -49,7 +49,7 @@ export default function Home() {
 
       <div className="bg-[#F6F3E4] min-h-[400px] px-6 py-8">
         <div className="flex justify-end">
-          <Pesquisa />
+          <Pesquisa pesquisa={pesquisa} setPesquisa={setPesquisa} />
         </div>
  
         <CarrosselProdutos
