@@ -23,12 +23,13 @@ export default function ProdutoCard({ produto }: ProdutoCardProps) {
         <div className="relative w-full h-[220px]">
         <Image
             src={
-            produto.imagens?.[0]?.urlImagem ||
-            "/produto-placeholder.png"
+                produto.imagens?.[0]?.urlImagem
+                    ? `${process.env.NEXT_PUBLIC_API_URL}${produto.imagens[0].urlImagem}`
+                    : "/produto-placeholder.png"
             }
             alt={produto.nome}
             fill
-            className="object-contain"
+            className="object-cover"
         />
 
         </div>

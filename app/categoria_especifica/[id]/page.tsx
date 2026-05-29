@@ -63,12 +63,12 @@ export default function CategoriaEspecifica() {
 
         <CarrosselProdutos
           titulo="Mais populares"
-          endpoint={`/produtos/melhores-avaliados?categoriaId=${categoriaId}`}
+          endpoint={categoriaId ? `/produtos/melhores-avaliados?categoriaId=${categoriaId}` : ''}
         />
 
         <CarrosselProdutos
           titulo="Recém adicionados"
-          endpoint={`/produtos/recem-adicionados?categoriaId=${categoriaId}`}
+          endpoint={categoriaId ? `/produtos/recem-adicionados?categoriaId=${categoriaId}` : ''}
         />
 
       </div>
