@@ -1,7 +1,8 @@
 'use client'
 
 import Image from "next/image";
-import Navbar from "../../components/navbar3";
+
+import Navbar from "../../components/navbar";
 import CarrosselProdutos from "../../components/carrossel_produtos";
 import Link from "next/link";
 import { useEffect, useState } from 'react';
@@ -9,15 +10,15 @@ import ModalCriacaoLoja from '../../components/modals/ModalCriarLoja';
 import ModalCriarProduto from "@/app/components/modals/ModalCriarProduto";
 import AvaliacoesUsuario from '../../components/carrossel_avaliacoes';
 import LojasUsuario from '../../components/carrossel_lojas_usuario';
-import { useRouter, useParams } from 'next/navigation'; // ✅ useParams importado aqui
+import { useRouter, useParams } from 'next/navigation'; 
 import ModalCriarLoja from "../../components/modals/ModalCriarLoja";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userId, setUserId] = useState<number | null>(null);
   const router = useRouter();
-  const params = useParams();                        // ✅ dentro do componente
-  const perfilId = Number(params.id);               // ✅ dentro do componente
+  const params = useParams();                      
+  const perfilId = Number(params.id);               
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
