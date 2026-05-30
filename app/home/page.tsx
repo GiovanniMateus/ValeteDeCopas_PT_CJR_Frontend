@@ -8,6 +8,7 @@ import Pesquisa from "../components/pesquisa";
 import CarrosselProdutos from "../components/carrossel_produtos";
 import CarrosselLojas from "../components/carrossel_lojas";
 import FiltroCategoria from "../components/filtro_categoria";
+import Link from "next/link";
 
 import {
   Shirt,
@@ -22,14 +23,14 @@ import {
 import ListaProdutos from "../components/lista_produtos";
 
 const categories = [
-  { name: "Beleza", icon: Sparkles },
-  { name: "Brinquedos", icon: ToyBrick },
-  { name: "Casa", icon: House },
-  { name: "Eletrônicos", icon: Smartphone },
-  { name: "Farmácia", icon: Pill },
-  { name: "Jogos", icon: Gamepad2 },
-  { name: "Mercado", icon: ShoppingBasket },
-  { name: "Moda", icon: Shirt },
+  {id:3, name: "Beleza", icon: Sparkles },
+  {id:7, name: "Brinquedos", icon: ToyBrick },
+  {id:8, name: "Casa", icon: House },
+  {id: 5, name: "Eletrônicos", icon: Smartphone },
+  {id:2, name: "Farmácia", icon: Pill },
+  {id:6, name: "Jogos", icon: Gamepad2 },
+  {id:1, name: "Mercado", icon: ShoppingBasket },
+  {id:4, name: "Moda", icon: Shirt },
 ];
 
 export default function Home() {
@@ -83,8 +84,9 @@ export default function Home() {
               const Icon = category.icon;
 
               return (
-                <div
-                  key={category.name}
+                <Link
+                  key={category.id}
+                  href={`/categoria_especifica/${category.id}`}
                   className="flex flex-col items-center min-w-[170px] rounded-3xl bg-white p-4 shadow-sm"
                 >
                   <Icon className="w-20 h-20 text-black" />
@@ -93,7 +95,7 @@ export default function Home() {
                     {category.name}
                   </span>
 
-                </div>
+                </Link>
               );
             })}
 

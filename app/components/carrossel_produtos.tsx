@@ -33,7 +33,7 @@ export default function CarrosselProdutos({
   const [produtos, setProdutos] = useState<Produto[]>([]);
 
   async function buscarProdutos() {
-
+    if (!endpoint) return;
     try {
 
       const response = await api.get(endpoint, {

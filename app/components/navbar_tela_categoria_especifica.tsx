@@ -26,14 +26,15 @@ export default function Navbar() {
   return (
     <nav className="h-[92px] w-full bg-black flex items-center justify-between px-8">
 
-  
+      <Link href="/home">
       <Image
-        src="/Stockio.png"
-        alt="Logo"
-        width={140}
-        height={60}
-        className="object-contain"
-      />
+          src="/Stockio.png"
+          alt="Logo"
+          width={140}
+          height={60}
+          className="object-contain"
+        />
+      </Link>
 
       {/* BOTÕES */}
       <div className="flex items-center gap-6">

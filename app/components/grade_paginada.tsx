@@ -10,7 +10,7 @@ interface GradePaginadaProps {
   pesquisa?: string;
 }
 
-const ORDENACOES = ["Relevância", "Menor preço", "Maior preço"];
+const ORDENACOES = ["Mais Recentes", "Menor preço", "Maior preço"];
 
 interface Subcategoria {
   id: number;
@@ -25,7 +25,7 @@ export default function GradePaginada({ categoriaId, pesquisa = "" }: GradePagin
   const [listaSubcategorias, setListaSubcategorias] = useState<Subcategoria[]>([]);
   const [subcategoriaSelecionada, setSubcategoriaSelecionada] = useState<number | null>(null);
   const [isOrdenacaoMenuOpen, setIsOrdenacaoMenuOpen] = useState(false);
-  const [ordenacao, setOrdenacao] = useState("Relevância");
+  const [ordenacao, setOrdenacao] = useState("Mais recentes");
 
   const ITENS_POR_PAGINA = 15;
 
