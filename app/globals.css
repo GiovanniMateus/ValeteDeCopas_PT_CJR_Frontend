@@ -10,6 +10,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-spartan: var(--font-league-spartan);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,6 +18,15 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
 }
 
 body {
