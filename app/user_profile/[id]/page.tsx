@@ -89,7 +89,7 @@ export default function Home() {
           <div className="w-[230px] h-[230px] rounded-full overflow-hidden">
    
             <Image
-              src={perfil?.fotoPerfilUrl ?? "/foto_de_perfil.png"}
+              src={perfil?.fotoPerfilUrl ?? "/user_sem_foto.png"}
               alt="Foto de perfil"
               width={230}
               height={230}
