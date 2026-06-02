@@ -1,24 +1,32 @@
 'use client'
 
 import Image from "next/image";
-
 import Navbar from "../../components/navbar";
 import CarrosselProdutos from "../../components/carrossel_produtos";
 import Link from "next/link";
 import { useEffect, useState } from 'react';
-import ModalCriacaoLoja from '../../components/modals/ModalCriarLoja';
 import ModalCriarProduto from "@/app/components/modals/ModalCriarProduto";
 import AvaliacoesUsuario from '../../components/carrossel_avaliacoes';
 import LojasUsuario from '../../components/carrossel_lojas_usuario';
-import { useRouter, useParams } from 'next/navigation'; 
-import ModalCriarLoja from "../../components/modals/ModalCriarLoja";
+import { useRouter, useParams } from 'next/navigation';
+import { api } from "@/services/api";
+
+
+interface Usuario {
+  id: number;
+  nome: string;
+  username: string;
+  email: string;
+  fotoPerfilUrl: string | null; 
+}
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userId, setUserId] = useState<number | null>(null);
+  const [userId, setUserId] = useState<number | null>(null);  
+  const [perfil, setPerfil] = useState<Usuario | null>(null);  
   const router = useRouter();
-  const params = useParams();                      
-  const perfilId = Number(params.id);               
+  const params = useParams();
+  const perfilId = Number(params.id); 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -34,8 +42,28 @@ export default function Home() {
       setUserId(user.id);
     }
 
-    setLoading(false);
-  }, [router]);
+    async function buscarPerfil() {
+      try {
+        const token = localStorage.getItem('token');
+
+        const response = await api.get<Usuario>(
+          `/users/${perfilId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setPerfil(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar perfil:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    buscarPerfil();
+  }, [router, perfilId]);
 
   if (loading) return <div>Carregando...</div>;
 
@@ -59,9 +87,9 @@ export default function Home() {
           </Link>
 
           <div className="w-[230px] h-[230px] rounded-full overflow-hidden">
-          
+   
             <Image
-              src="/foto_de_perfil.png"
+              src={perfil?.fotoPerfilUrl ?? "/user_sem_foto.png"}
               alt="Foto de perfil"
               width={230}
               height={230}
@@ -69,7 +97,6 @@ export default function Home() {
             />
           </div>
         </div>
-
         <div className="absolute bottom-[-90px] right-40">
           <Link
             href="/"
@@ -83,24 +110,30 @@ export default function Home() {
 
       <section className="ml-20 px-15 pb-20 pt-[130px]">
         <div className="mt-4">
-          <h1 className="text-5xl font-bold text-gray-900">Selena Gomez</h1>
-          <p className="text-2xl text-gray-500 mt-1">@ selenagomez</p>
+          <h1 className="text-5xl font-bold text-gray-900">
+            {perfil?.nome ?? "..."}
+          </h1>
+          <p className="text-2xl text-gray-500 mt-1">
+            @ {perfil?.username ?? "..."}
+          </p>
           <p className="text-2xl text-gray-500 flex items-center gap-1 mt-1">
-            ✉ selenamariegomez@rare.com
+            ✉ {perfil?.email ?? "..."}
           </p>
         </div>
       </section>
 
-      {userId && (
+      
+      {perfilId && (
         <div className="ml-10 px-10">
           <CarrosselProdutos
             titulo="Produtos"
             subtitulo=""
-            endpoint={`/produtos?userId=${userId}`}
+            endpoint={`/produtos?userId=${perfilId}`}
           />
         </div>
       )}
 
+      
       <LojasUsuario onAbrirModal={() => setIsModalOpen(true)} />
 
       <AvaliacoesUsuario />
