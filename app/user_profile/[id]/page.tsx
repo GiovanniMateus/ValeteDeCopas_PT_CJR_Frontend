@@ -7,9 +7,11 @@ import Link from "next/link";
 import { useEffect, useState } from 'react';
 import ModalCriarProduto from "@/app/components/modals/ModalCriarProduto";
 import AvaliacoesUsuario from '../../components/carrossel_avaliacoes';
+import ModalCriarAvaliacao from "@/app/components/modals/ModalCriarAvaliacao";
 import LojasUsuario from '../../components/carrossel_lojas_usuario';
 import { useRouter, useParams } from 'next/navigation';
 import { api } from "@/services/api";
+import ModalCriarLoja from "@/app/components/modals/ModalCriarLoja";
 
 
 interface Usuario {
@@ -139,7 +141,7 @@ export default function Home() {
       <AvaliacoesUsuario />
 
       {isModalOpen && (
-        <ModalCriarProduto onClose={() => setIsModalOpen(false)} />
+        <ModalCriarAvaliacao onClose={() => setIsModalOpen(false)} />
       )}
 
     </main>
