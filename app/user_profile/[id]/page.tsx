@@ -7,7 +7,8 @@ import Link from "next/link";
 import { useEffect, useState } from 'react';
 import ModalCriarProduto from "@/app/components/modals/ModalCriarProduto";
 import AvaliacoesUsuario from '../../components/carrossel_avaliacoes';
-import ModalCriarAvaliacao from "@/app/components/modals/ModalCriarAvaliacao";
+import ModalCriarAvaliacaoLoja from "@/app/components/modals/ModalCriarAvaliacaoLoja";
+import ModalEditarAvaliacaoLoja from "@/app/components/modals/ModalEditarAvaliacaoLoja";
 import LojasUsuario from '../../components/carrossel_lojas_usuario';
 import { useRouter, useParams } from 'next/navigation';
 import { api } from "@/services/api";
@@ -141,7 +142,7 @@ export default function Home() {
       <AvaliacoesUsuario />
 
       {isModalOpen && (
-        <ModalCriarAvaliacao onClose={() => setIsModalOpen(false)} />
+        <ModalEditarAvaliacaoLoja onClose={() => setIsModalOpen(false)} />
       )}
 
     </main>

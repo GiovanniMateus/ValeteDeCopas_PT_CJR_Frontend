@@ -4,17 +4,17 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useState } from 'react';
 
-interface ModalCriarAvaliacaoProps {
+interface ModalCriarAvaliacaoLojaProps {
   lojaId: number;
   nomeLoja: string;
   onClose: () => void;
 }
 
-export default function ModalCriarAvaliacao({
+export default function ModalCriarAvaliacaoLoja({
   lojaId,
   nomeLoja,
   onClose,
-}: ModalCriarAvaliacaoProps) {
+}: ModalCriarAvaliacaoLojaProps) {
   const [nota, setNota] = useState(0);
   const [hover, setHover] = useState(0);
   const [comentario, setComentario] = useState('');
@@ -115,7 +115,7 @@ export default function ModalCriarAvaliacao({
           {nota > 0 ? `${nota} estrela${nota > 1 ? 's' : ''}` : ''}
         </div>
 
-        {/* textarea */}
+      
         <textarea
           value={comentario}
           onChange={(e) => setComentario(e.target.value)}
