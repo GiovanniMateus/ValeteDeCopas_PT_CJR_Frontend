@@ -4,17 +4,17 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-interface ModalCriarAvaliacaoLojaProps {
-  lojaId: number;
-  nomeLoja: string;
+interface ModalCriarAvaliacaoProdutoProps {
+  produtoId: number;
+  nomeProduto: string;
   onClose: () => void;
 }
 
-export default function ModalCriarAvaliacaoLoja({
-  lojaId,
-  nomeLoja,
+export default function ModalCriarAvaliacaoProduto({
+  produtoId,
+  nomeProduto,
   onClose,
-}: ModalCriarAvaliacaoLojaProps) {
+}: ModalCriarAvaliacaoProdutoProps) {
   const [nota, setNota] = useState(0);
   const [hover, setHover] = useState(0);
   const [comentario, setComentario] = useState('');
@@ -30,14 +30,14 @@ export default function ModalCriarAvaliacaoLoja({
     setCarregando(true);
 
     try {
-      const response = await fetch('http://localhost:3001/avaliacoes-loja', {
+      const response = await fetch('http://localhost:3001/avaliacoes-produto', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify({
-          lojaId,
+          produtoId,
           nota,
           comentario,
         }),
@@ -77,7 +77,7 @@ export default function ModalCriarAvaliacaoLoja({
         <div className="w-full">
           <h2 className="text-[38px] font-light text-black">
             Você está avaliando{' '}
-            <span className="font-bold">{nomeLoja}</span>
+            <span className="font-bold">{nomeProduto}</span>
           </h2>
         </div>
 

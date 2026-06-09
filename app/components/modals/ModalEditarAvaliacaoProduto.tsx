@@ -3,25 +3,25 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-interface ModalEditarAvaliacaoLojaProps {
+interface ModalEditarAvaliacaoProdutoProps {
   avaliacaoId: number;
-  lojaId: number;
-  nomeLoja: string;
+  produtoId: number;
+  nomeProduto: string;
   notaInicial: number;
   comentarioInicial: string;
   onClose: () => void;
   onAtualizar?: () => void;
 }
 
-export default function ModalEditarAvaliacaoLoja({
+export default function ModalEditarAvaliacaoProduto({
   avaliacaoId,
-  lojaId,
-  nomeLoja,
+  produtoId,
+  nomeProduto,
   notaInicial,
   comentarioInicial,
   onClose,
   onAtualizar,
-}: ModalEditarAvaliacaoLojaProps) {
+}: ModalEditarAvaliacaoProdutoProps) {
   const [nota, setNota] = useState(notaInicial);
   const [hover, setHover] = useState(0);
   const [comentario, setComentario] = useState(comentarioInicial);
@@ -37,7 +37,7 @@ export default function ModalEditarAvaliacaoLoja({
 
     try {
       const response = await fetch(
-        `http://localhost:3001/avaliacoes-loja/${avaliacaoId}`,
+        `http://localhost:3001/avaliacoes-produto/${avaliacaoId}`,
         {
           method: 'PATCH',
           headers: {
@@ -45,7 +45,7 @@ export default function ModalEditarAvaliacaoLoja({
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
           body: JSON.stringify({
-            lojaId,
+            produtoId,
             nota,
             comentario,
           }),
@@ -77,7 +77,7 @@ export default function ModalEditarAvaliacaoLoja({
 
     try {
       const response = await fetch(
-        `http://localhost:3001/avaliacoes-loja/${avaliacaoId}`,
+        `http://localhost:3001/avaliacoes-produto/${avaliacaoId}`,
         {
           method: 'DELETE',
           headers: {
@@ -119,7 +119,7 @@ export default function ModalEditarAvaliacaoLoja({
         <div className="w-full">
           <h2 className="text-[38px] font-light text-black">
             Você está avaliando{' '}
-            <span className="font-bold">{nomeLoja}</span>
+            <span className="font-bold">{nomeProduto}</span>
           </h2>
         </div>
 
