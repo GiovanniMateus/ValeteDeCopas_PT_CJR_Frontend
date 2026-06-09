@@ -3,16 +3,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from 'next/navigation';
 
 import Navbar from "../../components/navbar";
 import CarrosselProdutos from "../../components/carrossel_produtos";
 import AvaliacoesUsuario from "../../components/carrossel_avaliacoes";
 import LojasUsuario from "../../components/carrossel_lojas_usuario";
 
+
 import ModalCriarProduto from "@/app/components/modals/ModalCriarProduto";
 import ModalEditarPerfil from "@/app/components/modals/ModalEditarPerfil";
 import ModalAlterarSenha from "@/app/components/modals/ModalAlterarSenha";
+
+
+import ModalCriarAvaliacaoLoja from "@/app/components/modals/ModalCriarAvaliacaoLoja";
+import ModalEditarAvaliacaoLoja from "@/app/components/modals/ModalEditarAvaliacaoLoja";
+import ModalCriarLoja from "@/app/components/modals/ModalCriarLoja";
+
 
 import { api } from "@/services/api";
 
@@ -164,13 +171,12 @@ export default function Home() {
       />
 
       <AvaliacoesUsuario />
-
+      
+      
       {isModalOpen && (
-        <ModalCriarProduto
-          onClose={() => setIsModalOpen(false)}
-        />
+        <ModalEditarAvaliacaoLoja onClose={() => setIsModalOpen(false)} />
       )}
-
+  
       <ModalEditarPerfil
         open={openEditarPerfil}
         onClose={() => setOpenEditarPerfil(false)}
