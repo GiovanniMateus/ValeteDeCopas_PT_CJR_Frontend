@@ -31,7 +31,7 @@ export default function ModalCriarAvaliacaoLoja({
 
     try {
       await axios.post(
-        'http://localhost:3001/avaliacao-loja', // ✅ rota correta
+        'http://localhost:3001/avaliacao-loja', 
         {
           lojaId,
           nota,
