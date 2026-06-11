@@ -39,7 +39,7 @@ export default function ModalEditarAvaliacaoLoja({
       const response = await fetch(
         `http://localhost:3001/avaliacoes-loja/${avaliacaoId}`,
         {
-          method: 'PATCH',
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('token')}`,
