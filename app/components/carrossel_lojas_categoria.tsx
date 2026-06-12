@@ -43,7 +43,6 @@ export default function CarrosselLojasCategoria({ categoriaId, titulo = "Princip
 
       <h2 className="text-white text-4xl font-bold mb-10">{titulo}</h2>
 
-      {/* skeleton */}
       {loading && (
         <div className="flex gap-12 overflow-x-auto pb-4" style={{ scrollbarWidth: "none" }}>
           {Array.from({ length: 3 }).map((_, i) => (

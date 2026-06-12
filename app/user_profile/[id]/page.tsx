@@ -15,8 +15,6 @@ import ModalCriarProduto from "@/app/components/modals/ModalCriarProduto";
 import ModalEditarPerfil from "@/app/components/modals/ModalEditarPerfil";
 import ModalAlterarSenha from "@/app/components/modals/ModalAlterarSenha";
 
-
-import ModalCriarAvaliacaoLoja from "@/app/components/modals/ModalCriarAvaliacaoLoja";
 import ModalEditarAvaliacaoLoja from "@/app/components/modals/ModalEditarAvaliacaoLoja";
 import ModalCriarLoja from "@/app/components/modals/ModalCriarLoja";
 
@@ -174,7 +172,7 @@ export default function Home() {
       
       
       {isModalOpen && (
-        <ModalEditarAvaliacaoLoja onClose={() => setIsModalOpen(false)} />
+        <ModalEditarAvaliacaoLoja onClose={() => setIsModalOpen(false)} avaliacaoId={0} lojaId={0} nomeLoja={""} notaInicial={0} comentarioInicial={""} />
       )}
   
       <ModalEditarPerfil

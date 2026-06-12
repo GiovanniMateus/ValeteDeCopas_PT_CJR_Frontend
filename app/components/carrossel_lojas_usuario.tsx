@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { api } from "@/services/api";
+import { Libertinus_Keyboard } from "next/font/google";
+import { Link } from "lucide-react";
 
 interface Loja {
   id: number;
@@ -55,7 +57,6 @@ export default function LojasUsuario({ onAbrirModal }: LojasUsuarioProps) {
         </button>
       </div>
 
-      {/* skeleton */}
       {loading && (
         <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: "none" }}>
           {Array.from({ length: 2 }).map((_, i) => (
@@ -79,8 +80,11 @@ export default function LojasUsuario({ onAbrirModal }: LojasUsuarioProps) {
           )}
 
           {lojas.map((loja) => (
+            <Link
+            key={loja.id}
+            href={`/loja/${loja.id}`}
+            className="bg-white min-w-[600px] flex-shrink-0 rounded-2xl px-11 py-11 flex items-center justify-between shadow-sm">
             <div
-              key={loja.id}
               className="bg-white min-w-[600px] flex-shrink-0 rounded-2xl px-11 py-11 flex items-center justify-between shadow-sm"
             >
               <div>
@@ -102,6 +106,7 @@ export default function LojasUsuario({ onAbrirModal }: LojasUsuarioProps) {
                 )}
               </div>
             </div>
+            </Link>
           ))}
 
         </div>

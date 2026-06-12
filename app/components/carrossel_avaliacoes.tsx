@@ -60,7 +60,6 @@ export default function AvaliacoesUsuario() {
 
       <h2 className="text-4xl font-bold text-gray-900 mb-4">Avaliações</h2>
 
-      {/* skeleton enquanto carrega */}
       {loading && (
         <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: "none" }}>
           {Array.from({ length: 2 }).map((_, i) => (
@@ -77,7 +76,7 @@ export default function AvaliacoesUsuario() {
         </div>
       )}
 
-      {/* lista de avaliações */}
+      
       {!loading && (
         <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: "none" }}>
 
@@ -89,7 +88,6 @@ export default function AvaliacoesUsuario() {
             <div key={av.id} className="bg-white rounded-2xl p-5 shadow-sm min-w-[900px] flex-shrink-0">
               <div className="flex items-start gap-4">
 
-                {/* avatar — usa fotoPerfilUrl do DB, cai no placeholder se null */}
                 <div className="w-[170px] h-[170px] rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
                   <Image
                     src={av.user?.fotoPerfilUrl ?? "/foto_de_perfil.png"}
