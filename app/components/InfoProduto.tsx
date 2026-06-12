@@ -23,47 +23,47 @@ export default function InfoProduto({
   descricao,
 }: InfoProdutoProps) {
   return (
-    <div className="flex flex-col gap-3 max-w-[380px]">
+    <div className="flex flex-col w-full max-w-[700px] font-[family:var(--font-league-spartan)]">
 
-      {/* Nome */}
-      <h1 className="text-3xl font-bold text-gray-900 leading-tight">
+      {/* nome  */}
+      <h1 className="text-5xl font-normal text-black leading-tight">
         {nome}
       </h1>
 
-      {/* avaliação, loja , estoque */}
-      <div className="flex items-center gap-4 text-sm flex-wrap">
+      {/* avaliacao, loja e estoqu*/}
+      <div className="flex items-center gap-x-4 gap-y-2 text-lg mt-2 flex-wrap">
 
-        {/* Estrela , nota , reviews */}
-        <div className="flex items-center gap-1">
-          <Star size={14} className="fill-yellow-400 text-yellow-400" />
-          <span className="font-semibold text-gray-800">{(media || 0).toFixed(1)}</span>
+        <div className="flex items-center gap-1 whitespace-nowrap">
+          <Star size={18} className="fill-yellow-400 text-yellow-400 border-none" />
+          <span className="text-black">{(media || 0).toFixed(1)}</span>
           <span className="text-gray-500">| {totalAvaliacoes} reviews</span>
         </div>
 
-        
         <Link
           href={`/loja/${loja.id}`}
-          className="text-purple-600 font-medium hover:underline"
+          className="text-[#8B5CF6] hover:underline whitespace-nowrap"
         >
           {loja.nome}
         </Link>
 
-        
-        <span className="text-[#5C8A00] font-medium">
+        <span className="text-[#8B5CF6] whitespace-nowrap">
           {estoque} disponíveis
         </span>
 
       </div>
 
       {/* preco */}
-      <p className="text-4xl font-bold text-gray-900">
+      <p className="text-5xl font-normal text-black mt-4 tracking-tight">
         R${preco.toFixed(2).replace(".", ",")}
       </p>
 
-
-      <div className="mt-1">
-        <h2 className="text-base font-bold text-gray-900 mb-2">Descrição</h2>
-        <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+      {/* descricao */}
+      <div className="mt-8">
+        <h2 className="text-2xl font-normal text-black">Descrição</h2>
+        
+        <div className="w-8 h-[3px] bg-gray-300 mt-1 mb-4 rounded-full"></div>
+        
+        <p className="text-base text-gray-800 leading-relaxed whitespace-pre-line font-light">
           {descricao}
         </p>
       </div>

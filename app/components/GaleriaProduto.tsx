@@ -27,17 +27,24 @@ export default function GaleriaProduto({ imagens, loja }: GaleriaProdutoProps) {
   const urlBase = process.env.NEXT_PUBLIC_API_URL ?? "";
 
   return (
-    <div className="flex items-start gap-4">
+    <div className="flex items-start gap-10 ml-12">
 
-      {/* coluna da esquerda */}
-      <div className="flex flex-col items-center gap-3 pt-2">
+      {/* coluna lateral */}
+      <div className="relative flex flex-col items-center gap-3">
 
+       
         <button
           onClick={() => router.back()}
-          className="text-gray-700 hover:text-black transition mb-1"
+          className="absolute left-[-70px] top-[30px] -translate-y-1/2 hover:scale-110 transition-transform z-10 cursor-pointer"
           aria-label="Voltar"
         >
-          <ChevronLeft size={28} strokeWidth={2.5} />
+          <Image
+            src="/seta_produto_voltar.png" 
+            alt="Voltar"
+            width={18}
+            height={26}
+            className="object-contain"
+          />
         </button>
 
         {imagens.map((img, i) => (
@@ -62,9 +69,8 @@ export default function GaleriaProduto({ imagens, loja }: GaleriaProdutoProps) {
         ))}
       </div>
 
-      {/* imagem centra */}
-      <div className="relative w-[490px] h-[490px] rounded-3xl overflow-hidden bg-white flex-shrink-0">
-
+      {/* imagem pprincipal */}
+      <div className="relative w-[550px] h-[490px] rounded-3xl overflow-hidden bg-white flex-shrink-0">
         {imagens[imagemAtiva] && (
           <Image
             src={`${urlBase}${imagens[imagemAtiva].urlImagem}`}
@@ -75,8 +81,7 @@ export default function GaleriaProduto({ imagens, loja }: GaleriaProdutoProps) {
           />
         )}
 
-        
-        {/* Slogo da loja*/}
+        {/*logo loja*/}
         {loja.logoUrl && (
           <div className="absolute top-4 right-4 w-[56px] h-[56px] rounded-full overflow-hidden border-2 border-white shadow-md bg-white">
             <Image
