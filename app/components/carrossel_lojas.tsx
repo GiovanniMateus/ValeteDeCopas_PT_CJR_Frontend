@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { api } from "@/services/api";
+import Link from "next/link";
 
 interface Loja {
   id: number;
@@ -65,9 +66,9 @@ export default function CarrosselLojas({
         <div className="flex gap-10 min-w-max pb-4">
 
           {lojasFiltradas.map((loja) => (
-
-            <div
+            <Link
               key={loja.id}
+              href={`/loja/${loja.id}`}
               className="flex flex-col items-center min-w-[180px]"
             >
 
@@ -90,7 +91,7 @@ export default function CarrosselLojas({
                 {loja.categoria?.nome}
               </p>
 
-            </div>
+            </Link>
           ))}
 
         </div>
