@@ -162,7 +162,7 @@ export default function ModalEditarAvaliacaoProduto({
         <textarea
           value={comentario}
           onChange={(e) => setComentario(e.target.value)}
-          placeholder="Avaliação da loja"
+          placeholder="Avaliação do produto"
           className="mt-10 w-[826px] h-[380px] rounded-[24px] bg-white p-8 resize-none outline-none text-[18px] text-black placeholder:text-gray-400"
         />
 

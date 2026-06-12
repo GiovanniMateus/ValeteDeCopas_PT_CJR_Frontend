@@ -11,6 +11,9 @@ interface InfoProdutoProps {
   estoque: number;
   preco: number;
   descricao: string;
+  eLogado: boolean;
+  onAbrirModalAvaliacao: () => void;
+
 }
 
 export default function InfoProduto({
@@ -21,14 +24,30 @@ export default function InfoProduto({
   estoque,
   preco,
   descricao,
+  eLogado,
+  onAbrirModalAvaliacao,
+
 }: InfoProdutoProps) {
   return (
     <div className="flex flex-col w-full max-w-[700px] font-[family:var(--font-league-spartan)]">
 
-      {/* nome  */}
-      <h1 className="text-5xl font-normal text-black leading-tight">
-        {nome}
-      </h1>
+        <div className="flex items-center gap-4">
+            {/* nome  */}
+            <h1 className="text-5xl font-normal text-black leading-tight">
+                {nome}
+            </h1>
+
+            {/*Botao de avaliação  */}
+            {eLogado && (
+            <button
+                onClick={onAbrirModalAvaliacao}
+                className="w-7 h-7 rounded-full bg-yellow-400 hover:bg-yellow-500 transition flex items-center justify-center flex-shrink-0"
+                title="Avaliar produto"
+            >
+                <Star size={16} className="fill-white text-white" />
+            </button>
+            )}
+        </div>
 
       {/* avaliacao, loja e estoqu*/}
       <div className="flex items-center gap-x-4 gap-y-2 text-lg mt-2 flex-wrap">

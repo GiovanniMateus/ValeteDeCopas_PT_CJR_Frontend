@@ -6,7 +6,7 @@ import { api } from "@/services/api";
 import Navbar from "@/app/components/navbar";
 import GaleriaProduto from "@/app/components/GaleriaProduto";
 import InfoProduto from "@/app/components/InfoProduto";
-
+import ModalCriarAvaliacaoProduto from "@/app/components/modals/ModalCriarAvaliacaoProduto";
 
 interface ImagemProduto {
   id: number;
@@ -46,8 +46,20 @@ export default function ProdutoEspecifico() {
   const params = useParams();
   const produtoId = Number(params.id);
 
+   const [userId, setUserId] = useState<number | null>(null);
+
   const [produto, setProduto] = useState<Produto | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const [modalAvaliarAberto, setModalAvaliarAberto] = useState(false);
+
+  useEffect(() => {
+    const u = localStorage.getItem("user");
+    if (u) {
+      try { setUserId(JSON.parse(u).id); } catch { /* ignora  */ }
+    }
+  }, []);
+
 
   useEffect(() => {
     async function buscar() {
@@ -62,6 +74,9 @@ export default function ProdutoEspecifico() {
     }
     if (produtoId) buscar();
   }, [produtoId]);
+
+  const eLogado = !!userId;
+
 
   if (loading) {
     return (
@@ -107,6 +122,8 @@ export default function ProdutoEspecifico() {
             estoque={produto.estoque}
             preco={produto.preco}
             descricao={produto.descricao}
+            eLogado={eLogado}
+            onAbrirModalAvaliacao={() => setModalAvaliarAberto(true)}
           />
 
         </div>
@@ -115,6 +132,16 @@ export default function ProdutoEspecifico() {
         */}
 
       </div>
-    </main>
+
+        {modalAvaliarAberto && (
+          <ModalCriarAvaliacaoProduto 
+          
+            produtoId={produtoId} 
+            nomeProduto={produto.nome}
+            onClose={() => setModalAvaliarAberto(false)} 
+            
+          />
+        )}
+     </main>
   );
 }
