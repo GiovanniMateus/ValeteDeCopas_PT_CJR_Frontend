@@ -65,7 +65,6 @@ export default function ReviewsLoja({
   return (
     <section>
 
-      {/* Cabeçalho */}
       <div className="flex flex-col items-center mb-12">
 
         <h2
@@ -104,7 +103,6 @@ export default function ReviewsLoja({
 
       </div>
 
-      {/* Botão ver mais */}
       <div className="flex justify-end mb-6">
 
         <button
@@ -120,7 +118,6 @@ export default function ReviewsLoja({
 
       </div>
 
-      {/* Carrossel */}
       <div
         className="
           flex
@@ -156,7 +153,6 @@ export default function ReviewsLoja({
             "
           >
 
-            {/* Foto */}
             <div
               className="
                 w-40
@@ -181,7 +177,6 @@ export default function ReviewsLoja({
 
             </div>
 
-            {/* Conteúdo */}
             <div className="flex-1">
 
               <div className="flex justify-between items-start">

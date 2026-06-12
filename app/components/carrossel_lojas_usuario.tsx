@@ -57,7 +57,6 @@ export default function LojasUsuario({ onAbrirModal }: LojasUsuarioProps) {
         </button>
       </div>
 
-      {/* skeleton */}
       {loading && (
         <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: "none" }}>
           {Array.from({ length: 2 }).map((_, i) => (
