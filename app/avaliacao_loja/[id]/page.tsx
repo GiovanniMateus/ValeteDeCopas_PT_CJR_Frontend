@@ -4,16 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-
 import Navbar from "../../components/navbar";
 import { api } from "@/services/api";
-import ModalEditarAvaliacaoLoja from "../../components/modals/ModalEditarAvaliacaoLoja";
-//import ModalEditarComentario from "../../components/modals/ModalEditarComentario";
+import ModalEditarComentarioAvaliacao from "@/app/components/modals/ModalEditarComentarioAvaliacao";
+import ModalEditarAvaliacaoLoja from "@/app/components/modals/ModalEditarAvaliacaoLoja";
 
 interface Comentario {
   id: number;
   conteudo: string;
   createdAt: string;
+  avaliacaoLojaId: number;
   user: {
     id: number;
     nome: string;
@@ -334,17 +334,17 @@ export default function AvaliacaoLojaPage() {
         />
       )}
 
-      {/* falta o Modal de editar comentário ainda vou fazer rpz
       {comentarioEditando && (
-        <ModalEditarComentario
-          comentario={comentarioEditando}
+        <ModalEditarComentarioAvaliacao
+          comentarioId={comentarioEditando.id}
+          conteudo={comentarioEditando.conteudo}
           onClose={() => setComentarioEditando(null)}
-          onSalvo={() => {
+          onAtualizar={() => {
             setComentarioEditando(null);
             carregarComentarios();
           }}
         />
-      )} */}
+      )}
     </main>
   );
 }

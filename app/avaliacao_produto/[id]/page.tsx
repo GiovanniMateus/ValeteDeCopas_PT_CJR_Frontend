@@ -4,11 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-
 import Navbar from "../../components/navbar";
 import { api } from "@/services/api";
 import ModalEditarAvaliacaoProduto from "../../components/modals/ModalEditarAvaliacaoProduto";
-// import ModalEditarComentario from "../../components/modals/ModalEditarComentario";
+import ModalEditarComentarioAvaliacao from "../../components/modals/ModalEditarComentarioAvaliacao";
 
 interface Comentario {
   id: number;
@@ -354,17 +353,17 @@ export default function AvaliacaoProdutoPage() {
         />
       )}
 
-      {/* Modal editar comentário
       {comentarioEditando && (
-        <ModalEditarComentario
-          comentario={comentarioEditando}
-          onClose={() => setComentarioEditando(null)}
-          onSalvo={() => {
-            setComentarioEditando(null);
-            carregarComentarios();
-          }}
-        />
-      )} */}
+              <ModalEditarComentarioAvaliacao
+                comentarioId={comentarioEditando.id}
+                conteudo={comentarioEditando.conteudo}
+                onClose={() => setComentarioEditando(null)}
+                onAtualizar={() => {
+                  setComentarioEditando(null);
+                  carregarComentarios();
+                }}
+              />
+      )}
     </main>
   );
 }
