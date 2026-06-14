@@ -9,6 +9,7 @@ import InfoProduto from "@/app/components/InfoProduto";
 import ModalCriarAvaliacaoProduto from "@/app/components/modals/ModalCriarAvaliacaoProduto";
 import CarrosselAvaliacoesProduto from "@/app/components/carrosel_avaliacoes_produto";
 import ModalEditarAvaliacaoProduto from "@/app/components/modals/ModalEditarAvaliacaoProduto";
+import ModalEditarProduto from "@/app/components/modals/ModalEditarProduto";
 
 interface ImagemProduto {
   id: number;
@@ -57,6 +58,8 @@ export default function ProdutoEspecifico() {
   const [modalEditarAberto, setModalEditarAberto] = useState(false);
   const [avaliacaoEditando, setAvaliacaoEditando] = useState<AvaliacaoProduto | null>(null);
 
+  const [modalEditarProdutoAberto, setModalEditarProdutoAberto] = useState(false);
+
   useEffect(() => {
     const u = localStorage.getItem("user");
     if (u) {
@@ -70,6 +73,8 @@ export default function ProdutoEspecifico() {
         setProduto(res.data);
       } catch (err) {
         console.error("Erro ao buscar produto:", err);
+
+        setProduto(null);
       } finally {
         setLoading(false);
       }
@@ -105,6 +110,9 @@ export default function ProdutoEspecifico() {
     );
   }
 
+  //  valida se o user logado é o dono da loja para editar o produto
+  const eDonoDaLoja = eLogado && produto.loja.userId === userId;
+
   return (
     <main className="min-h-screen bg-[#F5F2E3]">
       <Navbar />
@@ -129,6 +137,8 @@ export default function ProdutoEspecifico() {
             descricao={produto.descricao}
             eLogado={eLogado}
             onAbrirModalAvaliacao={() => setModalAvaliarAberto(true)}
+            eDonoDaLoja={eDonoDaLoja}
+            onAbrirModalEdicao={() => setModalEditarProdutoAberto(true)}
           />
 
         </div>
@@ -177,6 +187,14 @@ export default function ProdutoEspecifico() {
             onAtualizar={() => buscar()}
 
       
+          />
+        )}
+
+        {modalEditarProdutoAberto && (
+          <ModalEditarProduto
+            produto={produto} 
+            onClose={() => setModalEditarProdutoAberto(false)}
+            onAtualizar={() => buscar()} 
           />
         )}
 

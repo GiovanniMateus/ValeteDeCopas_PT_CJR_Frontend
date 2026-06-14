@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Star } from "lucide-react";
+import Image from "next/image";
 
 interface InfoProdutoProps {
   nome: string;
@@ -13,6 +14,9 @@ interface InfoProdutoProps {
   descricao: string;
   eLogado: boolean;
   onAbrirModalAvaliacao: () => void;
+  eDonoDaLoja: boolean; 
+  onAbrirModalEdicao: () => void;
+  
 
 }
 
@@ -26,6 +30,9 @@ export default function InfoProduto({
   descricao,
   eLogado,
   onAbrirModalAvaliacao,
+  eDonoDaLoja,
+  onAbrirModalEdicao,
+  
 
 }: InfoProdutoProps) {
   return (
@@ -37,16 +44,38 @@ export default function InfoProduto({
                 {nome}
             </h1>
 
-            {/*Botao de avaliação  */}
+            {/*Botao de avaliaçao e edicao  */}
+            <div className="flex items-center gap-2 mt-2">  
+            {eDonoDaLoja && (
+                    <button
+                        onClick={onAbrirModalEdicao}
+                        className="transition-transform hover:scale-105 flex-shrink-0 cursor-pointer"
+                        title="Editar produto"
+                    >
+                        <Image 
+                            src="/botao_editar.png" 
+                            alt="Editar Produto" 
+                            width={30} 
+                            height={30} 
+                        />
+                    </button>
+                )}
             {eLogado && (
-            <button
-                onClick={onAbrirModalAvaliacao}
-                className="w-7 h-7 rounded-full bg-yellow-400 hover:bg-yellow-500 transition flex items-center justify-center flex-shrink-0"
-                title="Avaliar produto"
-            >
-                <Star size={16} className="fill-white text-white" />
+              <button
+                  onClick={onAbrirModalAvaliacao}
+                  className="w-7 h-7 rounded-full bg-yellow-400 hover:bg-yellow-500 transition flex items-center justify-center flex-shrink-0"
+                  title="Avaliar produto"
+              >
+                <Image 
+                    src="/botao_avaliar.png" 
+                    alt="Editar Produto" 
+                    width={30} 
+                    height={30} 
+                />
+                
             </button>
             )}
+            </div>
         </div>
 
       {/* avaliacao, loja e estoqu*/}
