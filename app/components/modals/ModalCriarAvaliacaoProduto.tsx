@@ -7,6 +7,7 @@ import { useState } from 'react';
 interface ModalCriarAvaliacaoProdutoProps {
   produtoId: number;
   nomeProduto: string;
+  userId: number;
   onClose: () => void;
 }
 
@@ -14,6 +15,7 @@ export default function ModalCriarAvaliacaoProduto({
   produtoId,
   nomeProduto,
   onClose,
+  userId,
 }: ModalCriarAvaliacaoProdutoProps) {
   const [nota, setNota] = useState(0);
   const [hover, setHover] = useState(0);
@@ -40,6 +42,7 @@ export default function ModalCriarAvaliacaoProduto({
           produtoId,
           nota,
           comentario,
+          userId,
         }),
       });
 
