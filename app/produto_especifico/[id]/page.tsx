@@ -7,6 +7,8 @@ import Navbar from "@/app/components/navbar";
 import GaleriaProduto from "@/app/components/GaleriaProduto";
 import InfoProduto from "@/app/components/InfoProduto";
 import ModalCriarAvaliacaoProduto from "@/app/components/modals/ModalCriarAvaliacaoProduto";
+import CarrosselAvaliacoesProduto from "@/app/components/carrosel_avaliacoes_produto";
+import ModalEditarAvaliacaoProduto from "@/app/components/modals/ModalEditarAvaliacaoProduto";
 
 interface ImagemProduto {
   id: number;
@@ -52,6 +54,8 @@ export default function ProdutoEspecifico() {
   const [loading, setLoading] = useState(true);
 
   const [modalAvaliarAberto, setModalAvaliarAberto] = useState(false);
+  const [modalEditarAberto, setModalEditarAberto] = useState(false);
+  const [avaliacaoEditando, setAvaliacaoEditando] = useState<AvaliacaoProduto | null>(null);
 
   useEffect(() => {
     const u = localStorage.getItem("user");
@@ -60,9 +64,7 @@ export default function ProdutoEspecifico() {
     }
   }, []);
 
-
-  useEffect(() => {
-    async function buscar() {
+  async function buscar() {
       try {
         const res = await api.get<Produto>(`/produtos/${produtoId}`);
         setProduto(res.data);
@@ -71,7 +73,10 @@ export default function ProdutoEspecifico() {
       } finally {
         setLoading(false);
       }
-    }
+    };
+
+
+  useEffect(() => {
     if (produtoId) buscar();
   }, [produtoId]);
 
@@ -130,6 +135,19 @@ export default function ProdutoEspecifico() {
 
         {/* avaliacoes
         */}
+        <CarrosselAvaliacoesProduto 
+          avaliacoes={produto.avaliacoes} 
+          
+          loggedUserId={userId} 
+          
+          onEditClick={(avaliacao) => {
+            
+            setAvaliacaoEditando(avaliacao); 
+            setModalEditarAberto(true);             
+              }}
+        />
+
+
 
       </div>
 
@@ -138,10 +156,30 @@ export default function ProdutoEspecifico() {
           
             produtoId={produtoId} 
             nomeProduto={produto.nome}
+            userId={userId!}
             onClose={() => setModalAvaliarAberto(false)} 
+            onAtualizar={() => buscar()}
             
           />
         )}
+
+        {modalEditarAberto && avaliacaoEditando && (
+          <ModalEditarAvaliacaoProduto
+            avaliacaoId={avaliacaoEditando.id}
+            produtoId={produtoId}
+            nomeProduto={produto.nome}
+            notaInicial={avaliacaoEditando.nota}
+            comentarioInicial={avaliacaoEditando.comentario}
+            onClose={() => {
+              setModalEditarAberto(false);
+              setAvaliacaoEditando(null); 
+            }}
+            onAtualizar={() => buscar()}
+
+      
+          />
+        )}
+
      </main>
   );
 }

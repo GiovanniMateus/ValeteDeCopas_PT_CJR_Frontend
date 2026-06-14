@@ -9,6 +9,7 @@ interface ModalCriarAvaliacaoProdutoProps {
   nomeProduto: string;
   userId: number;
   onClose: () => void;
+  onAtualizar?: () => void;
 }
 
 export default function ModalCriarAvaliacaoProduto({
@@ -16,6 +17,7 @@ export default function ModalCriarAvaliacaoProduto({
   nomeProduto,
   onClose,
   userId,
+  onAtualizar,
 }: ModalCriarAvaliacaoProdutoProps) {
   const [nota, setNota] = useState(0);
   const [hover, setHover] = useState(0);
@@ -52,6 +54,7 @@ export default function ModalCriarAvaliacaoProduto({
 
       setMensagemSucesso('Avaliação enviada com sucesso!');
       setCarregando(false);
+      onAtualizar?.();
 
       setTimeout(() => {
         onClose();
