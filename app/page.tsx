@@ -1,65 +1,157 @@
+'use client'
+
+import { useState } from "react";
 import Image from "next/image";
 
+import Navbar from "@/app/components/navbar";
+import Pesquisa from "@/app/components/pesquisa";
+import CarrosselProdutos from "@/app/components/carrossel_produtos";
+import CarrosselLojas from "@/app/components/carrossel_lojas";
+import FiltroCategoria from "@/app/components/filtro_categoria";
+import ListaProdutos from "@/app/components/lista_produtos";
+import Link from "next/link";
+
+
+
+
+// Essa pagina agora atua como a home do servidor 
+
+
+
+import {
+  Shirt,
+  Gamepad2,
+  House,
+  Smartphone,
+  Pill,
+  ShoppingBasket,
+  Sparkles,
+  ToyBrick
+} from "lucide-react";
+
+const categories = [
+  {id:3, name: "Beleza", icon: Sparkles },
+  {id:7, name: "Brinquedos", icon: ToyBrick },
+  {id:8, name: "Casa", icon: House },
+  {id: 5, name: "Eletrônicos", icon: Smartphone },
+  {id:2, name: "Farmácia", icon: Pill },
+  {id:6, name: "Jogos", icon: Gamepad2 },
+  {id:1, name: "Mercado", icon: ShoppingBasket },
+  {id:4, name: "Moda", icon: Shirt },
+];
+
 export default function Home() {
+
+  const [categoriasSelecionadas, setCategoriasSelecionadas] = useState<string[]>([]);
+  const [pesquisa, setPesquisa] = useState("");
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="min-h-screen bg-white">
+
+      <Navbar />
+
+      <section className="w-full bg-black h-[447px] flex items-center justify-between px-10 overflow-hidden">
+
+        <div className="text-white max-w-md">
+          <h1 className="text-4xl font-bold leading-tight">
+            Do CAOS à organização
+            <br />
+            em alguns cliques
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+
+        <div className="relative w-[572px] h-[447px]">
+          <Image
+            src="/personagem_home.png"
+            alt="Personagem"
+            fill
+            className="object-cover object-[50%_0%]"
+            sizes="(max-width: 768px) 100vw, 572px"
+            priority
+          />
+        </div>
+
+      </section>
+
+      <div className="bg-[#F6F3E4] min-h-[400px] px-6 py-8">
+
+        <div className="flex justify-end">
+          <Pesquisa pesquisa={pesquisa} setPesquisa={setPesquisa} />
+        </div>
+
+        <h1 className="text-black text-3xl font-bold pt-8">
+          Categorias
+        </h1>
+
+        <div className="mt-8 overflow-x-auto pb-4">
+
+          <div className="flex gap-4 min-w-max">
+
+            {categories.map((category) => {
+
+              const Icon = category.icon;
+
+              return (
+                <Link
+                  key={category.id}
+                  href={`/categoria_especifica/${category.id}`}
+                  className="flex flex-col items-center min-w-[170px] rounded-3xl bg-white p-4 shadow-sm"
+                >
+                  <Icon className="w-20 h-20 text-black" />
+
+                  <span className="mt-3 text-center text-base font-semibold text-black">
+                    {category.name}
+                  </span>
+
+                </Link>
+              );
+            })}
+
+          </div>
+
+        </div>
+
+        {pesquisa.trim() === "" ? (
+          <>
+            <CarrosselProdutos
+              titulo="Produtos"
+              subtitulo="melhores avaliados"
+              endpoint="/produtos/melhores-avaliados"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+            <CarrosselProdutos
+              titulo="Produtos"
+              subtitulo="mais baratos"
+              endpoint="/produtos/mais-baratos"
+            />
+
+            <CarrosselProdutos
+              titulo="Produtos"
+              subtitulo="recém adicionados"
+              endpoint="/produtos/recem-adicionados"
+            />
+          </>
+          ) : (
+          <ListaProdutos pesquisa={pesquisa} />
+        )}
+        
+        <div className="flex justify-between items-start mt-16 gap-10">
+
+          <div className="flex-1">
+            <CarrosselLojas
+              titulo="Lojas"
+              categoriasSelecionadas={categoriasSelecionadas}
+            />
+          </div>
+
+          <FiltroCategoria
+            categoriasSelecionadas={categoriasSelecionadas}
+            setCategoriasSelecionadas={setCategoriasSelecionadas}
+          />
+
         </div>
-      </main>
-    </div>
+
+      </div>
+
+    </main>
   );
 }

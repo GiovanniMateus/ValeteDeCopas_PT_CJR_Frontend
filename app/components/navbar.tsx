@@ -34,7 +34,7 @@ export default function Navbar() {
     <nav className="h-[92px] w-full bg-black flex items-center justify-between px-8">
 
      
-      <Link href="/home">
+      <Link href="/">
 
         <Image
           src="/Stockio.png"

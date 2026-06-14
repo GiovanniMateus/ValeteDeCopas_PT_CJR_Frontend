@@ -187,7 +187,7 @@ export default function AvaliacaoProdutoPage() {
 
         <div className="absolute top-14 left-14 right-14 flex justify-between">
           <div className="flex items-start gap-6">
-            <Link href="/home">
+            <Link href="/">
               <Image
                 src="/seta-esquerda.svg"
                 alt="Voltar"

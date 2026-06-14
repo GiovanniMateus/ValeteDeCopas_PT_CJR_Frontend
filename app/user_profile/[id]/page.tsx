@@ -96,7 +96,7 @@ export default function Home() {
 
         <div className="absolute bottom-[-115px] flex items-center gap-6 left-30">
 
-          <Link href="/home">
+          <Link href="/">
             <Image
               src="/seta-esquerda.svg"
               alt="Seta esquerda"
@@ -172,7 +172,7 @@ export default function Home() {
       
       
       {isModalOpen && (
-        <ModalEditarAvaliacaoLoja onClose={() => setIsModalOpen(false)} avaliacaoId={0} lojaId={0} nomeLoja={""} notaInicial={0} comentarioInicial={""} />
+        <ModalCriarLoja onClose={() => setIsModalOpen(false)}  />
       )}
   
       <ModalEditarPerfil
