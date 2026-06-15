@@ -101,7 +101,7 @@ export default function ModalEditarAvaliacaoProduto({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">  
       <div className="relative w-[1020px] h-[850px] max-h-[95vh] overflow-y-auto rounded-2xl bg-[#ededed] p-10 shadow-xl flex flex-col items-center">
         <button
           onClick={onClose}
@@ -162,7 +162,7 @@ export default function ModalEditarAvaliacaoProduto({
         <textarea
           value={comentario}
           onChange={(e) => setComentario(e.target.value)}
-          placeholder="Avaliação da loja"
+          placeholder="Avaliação do produto"
           className="mt-10 w-[826px] h-[380px] rounded-[24px] bg-white p-8 resize-none outline-none text-[18px] text-black placeholder:text-gray-400"
         />
 

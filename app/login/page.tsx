@@ -34,7 +34,7 @@ export default function LoginPage() {
       alert("Login realizado com sucesso!");
       
       // Redirecionando do usuário após o login:
-      router.push('/home'); 
+      router.push('/'); 
 
     } catch (error: any) {
       
