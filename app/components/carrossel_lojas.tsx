@@ -8,7 +8,6 @@ import Link from "next/link";
 interface Loja {
   id: number;
   nome: string;
-  logoUrl: string;
   stickerUrl: string;
   categoria: {
     nome: string;

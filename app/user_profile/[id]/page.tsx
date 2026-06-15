@@ -168,14 +168,12 @@ export default function Home() {
 
       <AvaliacoesUsuario />
       
-      
+
       
      {isModalOpen && (
         <ModalCriarLoja onClose={() => setIsModalOpen(false)}  />
-      )}
-      
+      )} 
 
-  
       <ModalEditarPerfil
         open={openEditarPerfil}
         onClose={() => setOpenEditarPerfil(false)}
