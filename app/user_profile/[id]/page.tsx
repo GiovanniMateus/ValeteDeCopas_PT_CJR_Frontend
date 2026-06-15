@@ -11,11 +11,9 @@ import AvaliacoesUsuario from "../../components/carrossel_avaliacoes";
 import LojasUsuario from "../../components/carrossel_lojas_usuario";
 
 
-import ModalCriarProduto from "@/app/components/modals/ModalCriarProduto";
 import ModalEditarPerfil from "@/app/components/modals/ModalEditarPerfil";
 import ModalAlterarSenha from "@/app/components/modals/ModalAlterarSenha";
 
-import ModalEditarAvaliacaoLoja from "@/app/components/modals/ModalEditarAvaliacaoLoja";
 import ModalCriarLoja from "@/app/components/modals/ModalCriarLoja";
 
 
@@ -171,9 +169,12 @@ export default function Home() {
       <AvaliacoesUsuario />
       
       
-      {isModalOpen && (
+      
+     {isModalOpen && (
         <ModalCriarLoja onClose={() => setIsModalOpen(false)}  />
       )}
+      
+
   
       <ModalEditarPerfil
         open={openEditarPerfil}
