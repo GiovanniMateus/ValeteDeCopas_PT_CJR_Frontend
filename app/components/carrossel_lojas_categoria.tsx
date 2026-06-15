@@ -70,11 +70,13 @@ export default function CarrosselLojasCategoria({ categoriaId, titulo = "Princip
               <div className="w-[220px] h-[220px] rounded-full bg-white flex items-center justify-center overflow-hidden flex-shrink-0">
                 {loja.logoUrl ? (
                   <Image
-                    src={loja.logoUrl}
+                    src={`${process.env.NEXT_PUBLIC_API_URL}${loja.logoUrl}`}
                     alt={`Logo ${loja.nome}`}
                     width={220}
                     height={220}
                     className="object-cover w-full h-full"
+      
+                   
                   />
                 ) : (
                

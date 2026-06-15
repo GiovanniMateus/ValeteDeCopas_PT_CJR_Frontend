@@ -75,7 +75,10 @@ export default function CarrosselLojas({
               <div className="relative w-[170px] h-[170px] rounded-full overflow-hidden bg-white shadow-sm">
 
                 <Image
-                  src={loja.logoUrl || "/logo.png"}
+                  src={loja.logoUrl 
+                      ? `${process.env.NEXT_PUBLIC_API_URL}${loja.logoUrl}` 
+                      : "/logo.png"
+                  }
                   alt={loja.nome}
                   fill
                   className="object-cover"

@@ -97,7 +97,7 @@ export default function LojasUsuario({ onAbrirModal }: LojasUsuarioProps) {
               <div className="w-[140px] h-[140px] rounded-full bg-[#f0e8e8] flex-shrink-0 overflow-hidden">
                 {loja.logoUrl && (
                   <Image
-                    src={loja.logoUrl}
+                   src={`${process.env.NEXT_PUBLIC_API_URL}${loja.logoUrl}`}
                     alt={`Logo ${loja.nome}`}
                     width={140}
                     height={140}

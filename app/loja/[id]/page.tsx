@@ -99,8 +99,9 @@ export default function LojaPage() {
 
         <Image
           src={
-            loja.bannerUrl ||
-            "/banner_loja_padrao.png"
+            loja.bannerUrl 
+              ? `${process.env.NEXT_PUBLIC_API_URL}${loja.bannerUrl}` 
+              : "/banner_loja_padrao.png"
           }
           alt={loja.nome}
           fill
@@ -139,11 +140,9 @@ export default function LojaPage() {
           <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-white bg-white">
 
             <Image
-              src={
-                loja.logoUrl ||
-                "/loja_sem_logo.png"
-              }
-              alt={loja.nome}
+              
+              src={`${process.env.NEXT_PUBLIC_API_URL}${loja.logoUrl}`}
+              alt={`Logo ${loja.nome}`}                
               width={160}
               height={160}
               className="w-full h-full object-cover"
