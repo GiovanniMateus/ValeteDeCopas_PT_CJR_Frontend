@@ -41,8 +41,9 @@ export default function AvaliacoesUsuario() {
   const [loading, setLoading] = useState(true);
 
   async function buscarAvaliacoes() {
+    // fix: a rota chamada estava diferente da rota no back
     try {
-      const response = await api.get<AvaliacaoLoja[]>("/avaliacao-loja");
+      const response = await api.get<AvaliacaoLoja[]>("/avaliacoes-loja");
       setAvaliacoes(response.data);
     } catch (error) {
       console.error("Erro ao buscar avaliações:", error);

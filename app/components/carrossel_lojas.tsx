@@ -8,7 +8,7 @@ import Link from "next/link";
 interface Loja {
   id: number;
   nome: string;
-  logoUrl: string;
+  stickerUrl: string;
   categoria: {
     nome: string;
   };
@@ -75,7 +75,10 @@ export default function CarrosselLojas({
               <div className="relative w-[170px] h-[170px] rounded-full overflow-hidden bg-white shadow-sm">
 
                 <Image
-                  src={loja.logoUrl || "/logo.png"}
+                  src={loja.stickerUrl 
+                      ? `${process.env.NEXT_PUBLIC_API_URL}${loja.stickerUrl}` 
+                      : "/logo.png"
+                  }
                   alt={loja.nome}
                   fill
                   className="object-cover"

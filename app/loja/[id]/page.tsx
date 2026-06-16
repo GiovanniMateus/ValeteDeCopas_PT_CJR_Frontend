@@ -97,15 +97,17 @@ export default function LojaPage() {
       {/* Banner */}
       <section className="relative h-[450px]">
 
-        <Image
-          src={
-            loja.bannerUrl ||
-            "/banner_loja_padrao.png"
-          }
-          alt={loja.nome}
-          fill
-          className="object-cover"
-        />
+        {loja.bannerUrl ? (
+          <Image
+            src={`${process.env.NEXT_PUBLIC_API_URL}${loja.bannerUrl}`}
+            alt={loja.nome}
+            fill
+            className="object-cover"
+          />
+         ) : 
+         ( // coloquei um fundo roxo como padrão para caso não exista banner
+          <div className="absolute inset-0 bg-gradient-to-r from-[#7C3AED] to-purple-900" />
+        )}
 
         <div className="absolute inset-0 bg-black/50" />
 
@@ -140,10 +142,11 @@ export default function LojaPage() {
 
             <Image
               src={
-                loja.logoUrl ||
-                "/loja_sem_logo.png"
+                loja.stickerUrl 
+                  ? `${process.env.NEXT_PUBLIC_API_URL}${loja.stickerUrl}` 
+                  : "/logo.png" 
               }
-              alt={loja.nome}
+              alt={`Logo ${loja.nome}`}                
               width={160}
               height={160}
               className="w-full h-full object-cover"
