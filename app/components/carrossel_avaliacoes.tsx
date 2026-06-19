@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { api } from "@/services/api";
+import { useRouter } from "next/navigation";
 
-// Esse arquivo ainda está sendo desenvolvido, pra funcionar o carrossel deve ter o crud completo de avaliacao
+// 
 interface AvaliacaoLoja {
   id: number;
   userId: number;
@@ -37,6 +38,7 @@ function Estrelas({ nota }: { nota: number }) {
 }
 
 export default function AvaliacoesUsuario() {
+  const router = useRouter();
   const [avaliacoes, setAvaliacoes] = useState<AvaliacaoLoja[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -118,8 +120,11 @@ export default function AvaliacoesUsuario() {
               </div>
 
               <div className="flex justify-end mt-4">
-                <button className="text-purple-600 text-sm font-semibold hover:underline">
-                  ver mais
+                <button
+                onClick={() => router.push(`/avaliacao_loja/${av.id}`)}
+                className="text-purple-600 text-sm font-semibold hover:underline"
+                >
+                ver mais
                 </button>
               </div>
             </div>
