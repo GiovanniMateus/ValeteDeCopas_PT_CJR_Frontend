@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
+import { Pencil, Plus } from 'lucide-react';
 
 import Navbar from '@/app/components/navbar';
 import CarrosselProdutos from '@/app/components/carrossel_produtos';
@@ -12,6 +13,9 @@ import ReviewsLoja from '@/app/components/carrossel_comentarios_loja';
 import ProdutosLojaPaginados from '@/app/components/produtos_loja_paginados';
 import { resolveImageUrl } from '@/app/lib/resolveImageUrl';
 
+import ModalEditarLoja from '@/app/components/modals/ModalEditarLoja';
+import ModalCriarProduto from '@/app/components/modals/ModalCriarProduto';
+
 interface Loja {
   id: number;
   nome: string;
@@ -19,6 +23,7 @@ interface Loja {
   logoUrl?: string;
   bannerUrl?: string;
   stickerUrl?: string;
+  userId: number; 
 }
 
 export default function LojaPage() {
@@ -30,44 +35,60 @@ export default function LojaPage() {
   const [mediaNota, setMediaNota] = useState(0);
   const [quantidadeAvaliacoes, setQuantidadeAvaliacoes] = useState(0);
 
+  const [userId, setUserId] = useState<number | null>(null);
+
+  const [modalEditarLojaAberto, setModalEditarLojaAberto] = useState(false);
+  const [modalCriarProdutoAberto, setModalCriarProdutoAberto] = useState(false);
+
+  // lê o usuário logado do localStorage 
   useEffect(() => {
-    async function carregarLoja() {
+    const u = localStorage.getItem('user');
+    if (u) {
       try {
-
-        const response = await api.get(`/lojas/${params.id}`);
-
-        setLoja(response.data);
-
-        const avaliacoesResponse = await api.get(
-          `/avaliacoes-loja/loja/${params.id}`
-        );
-
-        const avaliacoes = avaliacoesResponse.data;
-
-        if (avaliacoes.length > 0) {
-
-          const soma = avaliacoes.reduce(
-            (acc: number, avaliacao: any) =>
-              acc + avaliacao.nota,
-            0
-          );
-
-          setMediaNota(
-            soma / avaliacoes.length
-          );
-
-          setQuantidadeAvaliacoes(
-            avaliacoes.length
-          );
-        }
-
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
+        setUserId(JSON.parse(u).id);
+      } catch {
+        /* vai ignora erro de parse */
       }
     }
+  }, []);
 
+  async function carregarLoja() {
+    try {
+      const response = await api.get(`/lojas/${params.id}`);
+
+      setLoja(response.data);
+
+      const avaliacoesResponse = await api.get(
+        `/avaliacoes-loja/loja/${params.id}`
+      );
+
+      const avaliacoes = avaliacoesResponse.data;
+
+      if (avaliacoes.length > 0) {
+
+        const soma = avaliacoes.reduce(
+          (acc: number, avaliacao: any) =>
+            acc + avaliacao.nota,
+          0
+        );
+
+        setMediaNota(
+          soma / avaliacoes.length
+        );
+
+        setQuantidadeAvaliacoes(
+          avaliacoes.length
+        );
+      }
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
     carregarLoja();
   }, [params.id]);
 
@@ -89,6 +110,9 @@ export default function LojaPage() {
       "☆".repeat(5 - estrelasCheias)
     );
   }
+
+  // true se o usuário logado é o dono desta loja
+  const eDonoLoja = !!userId && loja.userId === userId;
 
   return (
     <main className="min-h-screen bg-[#F6F3E4]">
@@ -136,6 +160,27 @@ export default function LojaPage() {
 
         </div>
 
+        {/* botoes editar e adicionar produto*/}
+        {eDonoLoja && (
+          <div className="absolute top-6 right-6 flex flex-col gap-3 z-10">
+            <button
+              onClick={() => setModalEditarLojaAberto(true)}
+              className="w-12 h-12 rounded-full bg-purple-600 hover:bg-purple-700 transition flex items-center justify-center shadow-lg"
+              title="Editar loja"
+            >
+              <Pencil size={20} className="text-white" />
+            </button>
+
+            <button
+              onClick={() => setModalCriarProdutoAberto(true)}
+              className="w-12 h-12 rounded-full bg-purple-600 hover:bg-purple-700 transition flex items-center justify-center shadow-lg"
+              title="Adicionar produto"
+            >
+              <Plus size={22} className="text-white" />
+            </button>
+          </div>
+        )}
+
         {/* Logo */}
         <div className="absolute -bottom-20 left-20">
 
@@ -177,6 +222,22 @@ export default function LojaPage() {
           lojaId={loja.id}
         />
       </section>
+
+      
+      {modalEditarLojaAberto && (
+        <ModalEditarLoja
+          loja={loja}
+          onClose={() => setModalEditarLojaAberto(false)}
+          onAtualizar={carregarLoja}
+        />
+      )}
+
+      {modalCriarProdutoAberto && (
+        <ModalCriarProduto
+          lojaId={loja.id}
+          onClose={() => setModalCriarProdutoAberto(false)}
+        />
+      )}
 
     </main>
   );
