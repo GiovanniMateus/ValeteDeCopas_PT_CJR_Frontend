@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { User, Pencil } from "lucide-react"; 
+import { useRouter } from "next/navigation";
 
 interface AvaliacaoProduto {
   id: number;
@@ -40,6 +41,7 @@ export default function CarrosselAvaliacoesProduto({
   loggedUserId, 
   onEditClick 
 }: CarrosselAvaliacoesProdutoProps) {
+  const router = useRouter();
   
   return (
     <section className="px-10 pb-20 mt-4 ml-10 font-spartan">
@@ -102,7 +104,10 @@ export default function CarrosselAvaliacoesProduto({
             </div>
 
             <div className="flex justify-end mt-2">
-              <button className="text-purple-600 text-sm font-semibold hover:underline">
+              <button
+                onClick={() => router.push(`/avaliacao_produto/${av.id}`)}
+                className="text-purple-600 text-sm font-semibold hover:underline cursor-pointer"
+              >
                 ver mais
               </button>
             </div>

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Navbar from "../../components/navbar";
 import { api } from "@/services/api";
 import ModalEditarAvaliacaoProduto from "../../components/modals/ModalEditarAvaliacaoProduto";
@@ -86,6 +86,7 @@ function getUsuarioLogadoId(): number | null {
 
 export default function AvaliacaoProdutoPage() {
   const params = useParams();
+  const router = useRouter();
   const usuarioLogadoId = getUsuarioLogadoId();
 
   const [avaliacao, setAvaliacao] = useState<AvaliacaoProduto | null>(null);
@@ -186,14 +187,17 @@ export default function AvaliacaoProdutoPage() {
 
         <div className="absolute top-14 left-14 right-14 flex justify-between">
           <div className="flex items-start gap-6">
-            <Link href="/">
-              <Image
-                src="/seta-esquerda.svg"
-                alt="Voltar"
-                width={35}
-                height={55}
-              />
-            </Link>
+            <button
+              onClick={() => router.back()}
+              className="cursor-pointer"
+            >
+              <Image 
+                  src="/seta-esquerda.svg" 
+                  alt="Voltar" 
+                  width={35} 
+                  height={55} 
+                />
+            </button>
 
             <div className="w-[70px] h-[70px] rounded-full overflow-hidden">
               <Image

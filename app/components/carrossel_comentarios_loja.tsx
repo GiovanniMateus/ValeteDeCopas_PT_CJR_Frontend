@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { api } from '@/services/api';
+import { useRouter } from 'next/navigation';
 
 interface Avaliacao {
   id: number;
@@ -23,7 +24,7 @@ interface ReviewsLojaProps {
 export default function ReviewsLoja({
   lojaId,
 }: ReviewsLojaProps) {
-
+  const router = useRouter();
   const [avaliacoes, setAvaliacoes] = useState<Avaliacao[]>([]);
   const [media, setMedia] = useState(0);
 
@@ -222,6 +223,7 @@ export default function ReviewsLoja({
                 <div className="flex justify-end mt-4">
 
                   <button
+                    onClick={() => router.push(`/avaliacao_loja/${avaliacao.id}`)}
                     className="
                       text-[#8B5CF6]
                       text-xl
