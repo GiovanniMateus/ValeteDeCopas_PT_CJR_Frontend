@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/services/api";
 import { Libertinus_Keyboard } from "next/font/google";
 import Link  from "next/link";
+import { resolveImageUrl } from "../lib/resolveImageUrl";
 
 interface Loja {
   id: number;
@@ -95,7 +96,7 @@ export default function LojasUsuario({ onAbrirModal }: LojasUsuarioProps) {
               <div className="w-[140px] h-[140px] rounded-full bg-[#f0e8e8] flex-shrink-0 overflow-hidden">
                 {loja.stickerUrl && (
                   <Image
-                   src={`${process.env.NEXT_PUBLIC_API_URL}${loja.stickerUrl}`}
+                    src={resolveImageUrl(loja.stickerUrl)}
                     alt={`Logo ${loja.nome}`}
                     width={140}
                     height={140}
