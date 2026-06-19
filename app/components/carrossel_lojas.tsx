@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { api } from "@/services/api";
 import Link from "next/link";
+import { resolveImageUrl } from "../lib/resolveImageUrl";
 
 interface Loja {
   id: number;
@@ -75,10 +76,7 @@ export default function CarrosselLojas({
               <div className="relative w-[170px] h-[170px] rounded-full overflow-hidden bg-white shadow-sm">
 
                 <Image
-                  src={loja.stickerUrl 
-                      ? `${process.env.NEXT_PUBLIC_API_URL}${loja.stickerUrl}` 
-                      : "/logo.png"
-                  }
+                  src={resolveImageUrl(loja.stickerUrl, "/logo.png")}
                   alt={loja.nome}
                   fill
                   className="object-cover"

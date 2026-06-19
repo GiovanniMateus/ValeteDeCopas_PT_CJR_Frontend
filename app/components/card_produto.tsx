@@ -30,7 +30,9 @@ export default function ProdutoCard({ produto }: ProdutoCardProps) {
         <Image
             src={
                 produto.imagens?.[0]?.urlImagem
-                    ? `${process.env.NEXT_PUBLIC_API_URL}${produto.imagens[0].urlImagem}`
+                ? produto.imagens[0].urlImagem.startsWith('http')
+                ? produto.imagens?.[0]?.urlImagem
+                    : `${process.env.NEXT_PUBLIC_API_URL}${produto.imagens[0].urlImagem}`
                     : "/produto-placeholder.png"
             }
             alt={produto.nome}

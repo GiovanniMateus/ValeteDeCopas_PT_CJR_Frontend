@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { resolveImageUrl } from "../lib/resolveImageUrl";
 
 interface ImagemProduto {
   id: number;
@@ -59,7 +60,7 @@ export default function GaleriaProduto({ imagens, loja }: GaleriaProdutoProps) {
             `}
           >
             <Image
-              src={`${urlBase}${img.urlImagem}`}
+              src={resolveImageUrl(img.urlImagem)}
               alt={`Imagem ${i + 1}`}
               width={110}
               height={110}
@@ -73,7 +74,7 @@ export default function GaleriaProduto({ imagens, loja }: GaleriaProdutoProps) {
       <div className="relative w-[550px] h-[490px] rounded-3xl overflow-hidden bg-white flex-shrink-0">
         {imagens[imagemAtiva] && (
           <Image
-            src={`${urlBase}${imagens[imagemAtiva].urlImagem}`}
+            src={resolveImageUrl(imagens[imagemAtiva].urlImagem)}
             alt="Imagem principal do produto"
             fill
             className="object-contain"
@@ -85,7 +86,7 @@ export default function GaleriaProduto({ imagens, loja }: GaleriaProdutoProps) {
         {loja.logoUrl && (
           <div className="absolute top-4 right-4 w-[56px] h-[56px] rounded-full overflow-hidden border-2 border-white shadow-md bg-white">
             <Image
-              src={`${urlBase}${loja.logoUrl}`}
+              src={resolveImageUrl(loja.logoUrl, "/logo.png")}
               alt={loja.nome}
               width={56}
               height={56}

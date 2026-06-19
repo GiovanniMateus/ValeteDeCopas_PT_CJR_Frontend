@@ -10,6 +10,7 @@ import CarrosselProdutos from '@/app/components/carrossel_produtos';
 import { api } from '@/services/api';
 import ReviewsLoja from '@/app/components/carrossel_comentarios_loja';
 import ProdutosLojaPaginados from '@/app/components/produtos_loja_paginados';
+import { resolveImageUrl } from '@/app/lib/resolveImageUrl';
 
 interface Loja {
   id: number;
@@ -99,7 +100,7 @@ export default function LojaPage() {
 
         {loja.bannerUrl ? (
           <Image
-            src={`${process.env.NEXT_PUBLIC_API_URL}${loja.bannerUrl}`}
+            src={resolveImageUrl(loja.bannerUrl)}
             alt={loja.nome}
             fill
             className="object-cover"
@@ -141,11 +142,7 @@ export default function LojaPage() {
           <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-white bg-white">
 
             <Image
-              src={
-                loja.stickerUrl 
-                  ? `${process.env.NEXT_PUBLIC_API_URL}${loja.stickerUrl}` 
-                  : "/logo.png" 
-              }
+              src={resolveImageUrl(loja.stickerUrl) || "/logo.png"}
               alt={`Logo ${loja.nome}`}                
               width={160}
               height={160}

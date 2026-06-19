@@ -30,14 +30,14 @@ import {
 } from "lucide-react";
 
 const categories = [
-  {id:3, name: "Beleza", icon: Sparkles },
-  {id:7, name: "Brinquedos", icon: ToyBrick },
-  {id:8, name: "Casa", icon: House },
-  {id: 5, name: "Eletrônicos", icon: Smartphone },
-  {id:2, name: "Farmácia", icon: Pill },
+  {id:2, name: "Beleza", icon: Sparkles },
+  {id:8, name: "Brinquedos", icon: ToyBrick },
+  {id:7, name: "Casa", icon: House },
+  {id: 4, name: "Eletrônicos", icon: Smartphone },
+  {id:5, name: "Farmácia", icon: Pill },
   {id:6, name: "Jogos", icon: Gamepad2 },
   {id:1, name: "Mercado", icon: ShoppingBasket },
-  {id:4, name: "Moda", icon: Shirt },
+  {id:3, name: "Moda", icon: Shirt },
 ];
 
 export default function Home() {
