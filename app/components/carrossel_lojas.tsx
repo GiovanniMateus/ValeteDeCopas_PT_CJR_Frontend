@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { api } from "@/services/api";
+import Link from "next/link";
+import { resolveImageUrl } from "../lib/resolveImageUrl";
 
 interface Loja {
   id: number;
   nome: string;
-  logoUrl: string;
+  stickerUrl: string;
   categoria: {
     nome: string;
   };
@@ -65,16 +67,16 @@ export default function CarrosselLojas({
         <div className="flex gap-10 min-w-max pb-4">
 
           {lojasFiltradas.map((loja) => (
-
-            <div
+            <Link
               key={loja.id}
+              href={`/loja/${loja.id}`}
               className="flex flex-col items-center min-w-[180px]"
             >
 
               <div className="relative w-[170px] h-[170px] rounded-full overflow-hidden bg-white shadow-sm">
 
                 <Image
-                  src={loja.logoUrl || "/logo.png"}
+                  src={resolveImageUrl(loja.stickerUrl, "/logo.png")}
                   alt={loja.nome}
                   fill
                   className="object-cover"
@@ -90,7 +92,7 @@ export default function CarrosselLojas({
                 {loja.categoria?.nome}
               </p>
 
-            </div>
+            </Link>
           ))}
 
         </div>

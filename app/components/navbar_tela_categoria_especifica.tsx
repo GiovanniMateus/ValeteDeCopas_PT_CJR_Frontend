@@ -26,7 +26,7 @@ export default function Navbar() {
   return (
     <nav className="h-[92px] w-full bg-black flex items-center justify-between px-8">
 
-      <Link href="/home">
+      <Link href="/">
       <Image
           src="/Stockio.png"
           alt="Logo"
@@ -82,7 +82,7 @@ export default function Navbar() {
             </Link>
 
             <Link
-                href="/home"
+                href="/"
                 onClick={handleLogout}
                 className="group relative px-6 py-3 rounded-full hover:scale-105 transition flex items-center justify-center"
             >

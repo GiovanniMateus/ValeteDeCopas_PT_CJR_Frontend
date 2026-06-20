@@ -3,11 +3,14 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { api } from "@/services/api";
+import { Libertinus_Keyboard } from "next/font/google";
+import Link  from "next/link";
+import { resolveImageUrl } from "../lib/resolveImageUrl";
 
 interface Loja {
   id: number;
   nome: string;
-  logoUrl: string | null;
+  stickerUrl: string | null;
   categoria: {
     nome: string;
   };
@@ -55,7 +58,6 @@ export default function LojasUsuario({ onAbrirModal }: LojasUsuarioProps) {
         </button>
       </div>
 
-      {/* skeleton */}
       {loading && (
         <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: "none" }}>
           {Array.from({ length: 2 }).map((_, i) => (
@@ -79,10 +81,11 @@ export default function LojasUsuario({ onAbrirModal }: LojasUsuarioProps) {
           )}
 
           {lojas.map((loja) => (
-            <div
-              key={loja.id}
-              className="bg-white min-w-[600px] flex-shrink-0 rounded-2xl px-11 py-11 flex items-center justify-between shadow-sm"
-            >
+            <Link
+            key={loja.id}
+            href={`/loja/${loja.id}`}
+            className="bg-white min-w-[600px] flex-shrink-0 rounded-2xl px-11 py-11 flex items-center justify-between shadow-sm">
+            
               <div>
                 <h3 className="text-5xl text-gray-900">{loja.nome}</h3>
                 <p className="text-purple-600 text-4xl font-medium mt-1">
@@ -91,9 +94,9 @@ export default function LojasUsuario({ onAbrirModal }: LojasUsuarioProps) {
               </div>
 
               <div className="w-[140px] h-[140px] rounded-full bg-[#f0e8e8] flex-shrink-0 overflow-hidden">
-                {loja.logoUrl && (
+                {loja.stickerUrl && (
                   <Image
-                    src={loja.logoUrl}
+                    src={resolveImageUrl(loja.stickerUrl)}
                     alt={`Logo ${loja.nome}`}
                     width={140}
                     height={140}
@@ -101,7 +104,7 @@ export default function LojasUsuario({ onAbrirModal }: LojasUsuarioProps) {
                   />
                 )}
               </div>
-            </div>
+            </Link>
           ))}
 
         </div>

@@ -1,46 +1,90 @@
 'use client'
 
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useRouter, useParams } from 'next/navigation';
 
 import Navbar from "../../components/navbar";
 import CarrosselProdutos from "../../components/carrossel_produtos";
-import Link from "next/link";
-import { useEffect, useState } from 'react';
-import ModalCriacaoLoja from '../../components/modals/ModalCriarLoja';
-import ModalCriarProduto from "@/app/components/modals/ModalCriarProduto";
-import AvaliacoesUsuario from '../../components/carrossel_avaliacoes';
-import LojasUsuario from '../../components/carrossel_lojas_usuario';
-import { useRouter, useParams } from 'next/navigation'; 
-import ModalCriarLoja from "../../components/modals/ModalCriarLoja";
+import AvaliacoesUsuario from "../../components/carrossel_avaliacoes";
+import LojasUsuario from "../../components/carrossel_lojas_usuario";
+
+
+import ModalEditarPerfil from "@/app/components/modals/ModalEditarPerfil";
+import ModalAlterarSenha from "@/app/components/modals/ModalAlterarSenha";
+
+import ModalCriarLoja from "@/app/components/modals/ModalCriarLoja";
+
+
+import { api } from "@/services/api";
+
+interface Usuario {
+  id: number;
+  nome: string;
+  username: string;
+  email: string;
+  fotoPerfilUrl?: string;
+}
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userId, setUserId] = useState<number | null>(null);
-  const router = useRouter();
-  const params = useParams();                      
-  const perfilId = Number(params.id);               
+
+  const [openEditarPerfil, setOpenEditarPerfil] = useState(false);
+  const [openAlterarSenha, setOpenAlterarSenha] = useState(false);
+
+  const [perfil, setPerfil] = useState<Usuario | null>(null);
+
   const [loading, setLoading] = useState(true);
 
+  const router = useRouter();
+
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/login');
-      return;
+    async function carregarPerfil() {
+      try {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          router.push("/login");
+          return;
+        }
+
+        const userRaw = localStorage.getItem("user");
+
+        if (!userRaw) {
+          router.push("/login");
+          return;
+        }
+
+        const user = JSON.parse(userRaw);
+
+        const response = await api.get<Usuario>(
+          `/users/${user.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setPerfil(response.data);
+
+      } catch (error) {
+        console.error("Erro ao buscar perfil:", error);
+      } finally {
+        setLoading(false);
+      }
     }
 
-    const userRaw = localStorage.getItem('user');
-    if (userRaw) {
-      const user = JSON.parse(userRaw);
-      setUserId(user.id);
-    }
-
-    setLoading(false);
+    carregarPerfil();
   }, [router]);
 
-  if (loading) return <div>Carregando...</div>;
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
 
   return (
-    <main className="bg-[#F6F3E4]">
+    <main className="bg-[#F6F3E4] min-h-screen">
 
       <Navbar />
 
@@ -49,7 +93,8 @@ export default function Home() {
         <div className="w-full bg-black h-[280px]" />
 
         <div className="absolute bottom-[-115px] flex items-center gap-6 left-30">
-          <Link href="/home">
+
+          <Link href="/">
             <Image
               src="/seta-esquerda.svg"
               alt="Seta esquerda"
@@ -59,55 +104,93 @@ export default function Home() {
           </Link>
 
           <div className="w-[230px] h-[230px] rounded-full overflow-hidden">
-          
+
             <Image
-              src="/foto_de_perfil.png"
+              src={perfil?.fotoPerfilUrl || "/user_sem_foto.png"}
               alt="Foto de perfil"
               width={230}
               height={230}
               className="object-cover w-full h-full"
             />
+
           </div>
+
         </div>
 
         <div className="absolute bottom-[-90px] right-40">
-          <Link
-            href="/"
+
+          <button
+            onClick={() => setOpenEditarPerfil(true)}
             className="bg-purple-600 text-white px-30 py-3 rounded-full font-semibold hover:bg-purple-700 transition"
           >
             Editar Perfil
-          </Link>
+          </button>
+
         </div>
 
       </div>
 
       <section className="ml-20 px-15 pb-20 pt-[130px]">
+
         <div className="mt-4">
-          <h1 className="text-5xl font-bold text-gray-900">Selena Gomez</h1>
-          <p className="text-2xl text-gray-500 mt-1">@ selenagomez</p>
-          <p className="text-2xl text-gray-500 flex items-center gap-1 mt-1">
-            ✉ selenamariegomez@rare.com
+
+          <h1 className="text-5xl font-bold text-gray-900">
+            {perfil?.nome}
+          </h1>
+
+          <p className="text-2xl text-gray-500 mt-1">
+            @{perfil?.username}
           </p>
+
+          <p className="text-2xl text-gray-500 flex items-center gap-1 mt-1">
+            ✉ {perfil?.email}
+          </p>
+
         </div>
+
       </section>
 
-      {userId && (
+      {perfil?.id && (
         <div className="ml-10 px-10">
+
           <CarrosselProdutos
             titulo="Produtos"
             subtitulo=""
-            endpoint={`/produtos?userId=${userId}`}
+            endpoint={`/produtos?userId=${perfil.id}`}
           />
+
         </div>
       )}
 
-      <LojasUsuario onAbrirModal={() => setIsModalOpen(true)} />
+      <LojasUsuario
+        onAbrirModal={() => setIsModalOpen(true)}
+      />
 
       <AvaliacoesUsuario />
+      
 
-      {isModalOpen && (
-        <ModalCriarProduto onClose={() => setIsModalOpen(false)} />
-      )}
+      
+     {isModalOpen && (
+        <ModalCriarLoja onClose={() => setIsModalOpen(false)}  />
+      )} 
+
+      <ModalEditarPerfil
+        open={openEditarPerfil}
+        onClose={() => setOpenEditarPerfil(false)}
+        onAlterarSenha={() => {
+          setOpenEditarPerfil(false);
+          setOpenAlterarSenha(true);
+        }}
+      />
+
+      <ModalAlterarSenha
+        open={openAlterarSenha}
+        onClose={() => setOpenAlterarSenha(false)}
+        onReturn={() => {
+          setOpenAlterarSenha(false);
+          setOpenEditarPerfil(true);
+        }}
+      />
 
     </main>
   );

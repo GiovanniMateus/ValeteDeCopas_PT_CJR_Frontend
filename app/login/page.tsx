@@ -34,7 +34,7 @@ export default function LoginPage() {
       alert("Login realizado com sucesso!");
       
       // Redirecionando do usuário após o login:
-      router.push('/home'); 
+      router.push('/'); 
 
     } catch (error: any) {
       
@@ -110,10 +110,11 @@ export default function LoginPage() {
             </div>
 
             {/* Esqueceu senha */}
-            <div className="text-center mb-6">
-              <a href="#" className="text-gray-400 text-sm hover:underline">
+            
+            <div className="text-center mb-2">
+              <Link href="/esqueci-senha" className="text-gray-400 hover:underline">
                 Esqueceu sua senha?
-              </a>
+              </Link>
             </div>
 
             {/* Botão */}

@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { api } from "@/services/api";
+import { useRouter } from "next/navigation";
 
-// Esse arquivo ainda está sendo desenvolvido, pra funcionar o carrossel deve ter o crud completo de avaliacao
+// 
 interface AvaliacaoLoja {
   id: number;
   userId: number;
@@ -37,12 +38,14 @@ function Estrelas({ nota }: { nota: number }) {
 }
 
 export default function AvaliacoesUsuario() {
+  const router = useRouter();
   const [avaliacoes, setAvaliacoes] = useState<AvaliacaoLoja[]>([]);
   const [loading, setLoading] = useState(true);
 
   async function buscarAvaliacoes() {
+    // fix: a rota chamada estava diferente da rota no back
     try {
-      const response = await api.get<AvaliacaoLoja[]>("/avaliacao-loja");
+      const response = await api.get<AvaliacaoLoja[]>("/avaliacoes-loja");
       setAvaliacoes(response.data);
     } catch (error) {
       console.error("Erro ao buscar avaliações:", error);
@@ -60,7 +63,6 @@ export default function AvaliacoesUsuario() {
 
       <h2 className="text-4xl font-bold text-gray-900 mb-4">Avaliações</h2>
 
-      {/* skeleton enquanto carrega */}
       {loading && (
         <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: "none" }}>
           {Array.from({ length: 2 }).map((_, i) => (
@@ -77,7 +79,7 @@ export default function AvaliacoesUsuario() {
         </div>
       )}
 
-      {/* lista de avaliações */}
+      
       {!loading && (
         <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: "none" }}>
 
@@ -89,7 +91,6 @@ export default function AvaliacoesUsuario() {
             <div key={av.id} className="bg-white rounded-2xl p-5 shadow-sm min-w-[900px] flex-shrink-0">
               <div className="flex items-start gap-4">
 
-                {/* avatar — usa fotoPerfilUrl do DB, cai no placeholder se null */}
                 <div className="w-[170px] h-[170px] rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
                   <Image
                     src={av.user?.fotoPerfilUrl ?? "/foto_de_perfil.png"}
@@ -119,8 +120,11 @@ export default function AvaliacoesUsuario() {
               </div>
 
               <div className="flex justify-end mt-4">
-                <button className="text-purple-600 text-sm font-semibold hover:underline">
-                  ver mais
+                <button
+                onClick={() => router.push(`/avaliacao_loja/${av.id}`)}
+                className="text-purple-600 text-sm font-semibold hover:underline"
+                >
+                ver mais
                 </button>
               </div>
             </div>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export interface Produto {
   id: number;
@@ -17,23 +18,30 @@ interface ProdutoCardProps {
 
 export default function ProdutoCard({ produto }: ProdutoCardProps) {
   return (
-    <div className="bg-[#F8F8F8] rounded-[40px] w-[250px] h-[380px] p-7 flex flex-col">
+    
+    <Link 
+      href={`/produto_especifico/${produto.id}`} 
+      className="bg-[#F8F8F8] rounded-[40px] w-[250px] h-[380px] p-7 flex flex-col block transition-transform hover:scale-[1.02] hover:shadow-md cursor-pointer"
+    >
 
-        {/* IMAGEM */}
+
+        {/* imgem */}
         <div className="relative w-full h-[220px]">
         <Image
             src={
                 produto.imagens?.[0]?.urlImagem
-                    ? `${process.env.NEXT_PUBLIC_API_URL}${produto.imagens[0].urlImagem}`
+                ? produto.imagens[0].urlImagem.startsWith('http')
+                ? produto.imagens?.[0]?.urlImagem
+                    : `${process.env.NEXT_PUBLIC_API_URL}${produto.imagens[0].urlImagem}`
                     : "/produto-placeholder.png"
             }
             alt={produto.nome}
             fill
-            className="object-cover"
+            className="object-cover rounded-xl"
         />
 
         </div>
-    {/* INFO */}
+
         <div className="mt-auto">
 
         <h3 className="text-black text-[30px] font-semibold leading-tight line-clamp-2 text-ellipsis overflow-hidden">
@@ -58,8 +66,6 @@ export default function ProdutoCard({ produto }: ProdutoCardProps) {
 
         </div>
 
-    </div>
-    
-
-
-  );}
+    </Link>
+  );
+}
