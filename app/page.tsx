@@ -30,14 +30,14 @@ import {
 } from "lucide-react";
 
 const categories = [
-  {id:2, name: "Beleza", icon: Sparkles },
-  {id:8, name: "Brinquedos", icon: ToyBrick },
-  {id:7, name: "Casa", icon: House },
-  {id: 4, name: "Eletrônicos", icon: Smartphone },
-  {id:5, name: "Farmácia", icon: Pill },
-  {id:6, name: "Jogos", icon: Gamepad2 },
-  {id:1, name: "Mercado", icon: ShoppingBasket },
-  {id:3, name: "Moda", icon: Shirt },
+  { id: 1, name: "Mercado", icon: ShoppingBasket },
+  { id: 2, name: "Farmácia", icon: Pill },
+  { id: 3, name: "Beleza", icon: Sparkles },
+  { id: 4, name: "Moda", icon: Shirt },
+  { id: 5, name: "Eletrônicos", icon: Smartphone },
+  { id: 6, name: "Jogos", icon: Gamepad2 },
+  { id: 7, name: "Brinquedos", icon: ToyBrick },
+  { id: 8, name: "Casa", icon: House },
 ];
 
 export default function Home() {
@@ -45,15 +45,17 @@ export default function Home() {
   const [categoriasSelecionadas, setCategoriasSelecionadas] = useState<string[]>([]);
   const [pesquisa, setPesquisa] = useState("");
   return (
-    <main className="min-h-screen bg-white">
+
+    <main className="min-h-screen bg-white overflow-x-hidden">
 
       <Navbar />
 
       <section className="w-full bg-black h-[447px] flex items-center justify-between px-10 overflow-hidden">
 
-        <div className="text-white max-w-md">
-          <h1 className="text-4xl font-bold leading-tight">
-            Do CAOS à organização
+
+        <div className="text-white">
+          <h1 className="text-6xl font-bold leading-tight">
+            Do CAOS à organização,
             <br />
             em alguns cliques
           </h1>
@@ -134,19 +136,19 @@ export default function Home() {
           <ListaProdutos pesquisa={pesquisa} />
         )}
         
-        <div className="flex justify-between items-start mt-16 gap-10">
+        <div className="relative mt-16">
 
-          <div className="flex-1">
-            <CarrosselLojas
-              titulo="Lojas"
+          <CarrosselLojas
+            titulo="Lojas"
+            categoriasSelecionadas={categoriasSelecionadas}
+          />
+
+          <div className="absolute top-0 right-0 z-20">
+            <FiltroCategoria
               categoriasSelecionadas={categoriasSelecionadas}
+              setCategoriasSelecionadas={setCategoriasSelecionadas}
             />
           </div>
-
-          <FiltroCategoria
-            categoriasSelecionadas={categoriasSelecionadas}
-            setCategoriasSelecionadas={setCategoriasSelecionadas}
-          />
 
         </div>
 
