@@ -4,10 +4,11 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 interface ModalCriarProdutoProps {
+  lojaId: number;          
   onClose: () => void;
 }
 
-export default function ModalCriarProduto({ onClose }: ModalCriarProdutoProps) {
+export default function ModalCriarProduto({ lojaId, onClose }: ModalCriarProdutoProps) {
   const [mensagemSucesso, setMensagemSucesso] = useState('');
   const [nome, setNome] = useState('');
   const [subCategorias, setSubCategorias] = useState<{ id: number; nome: string }[]>([]);
@@ -132,9 +133,7 @@ export default function ModalCriarProduto({ onClose }: ModalCriarProdutoProps) {
     formData.append('preco', precoLimpo);
     formData.append('estoque', String(quantidade));
 
-    // OBS: como a página de loja ainda não foi desenvolvida, é necessário implementar a lógica para pegar o id
-    // referente a essa loja, aqui estou passando um id padrão 1
-    formData.append('lojaId', '1'); 
+    formData.append('lojaId', String(lojaId));
 
     if (foto1) formData.append('imagens', foto1);
     if (foto2) formData.append('imagens', foto2);
@@ -362,7 +361,7 @@ export default function ModalCriarProduto({ onClose }: ModalCriarProdutoProps) {
         />
 
 
-        {/*quantidade estoque: valor máximo 9999 */}
+        {/*quantidade no estoque: valor máximo 9999 */}
         <div className="flex items-center justify-center gap-[60px] mt-[15px] mb-[10px]">
   
             <button 
