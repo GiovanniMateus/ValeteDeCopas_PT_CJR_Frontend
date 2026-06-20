@@ -52,9 +52,10 @@ export default function Home() {
 
       <section className="w-full bg-black h-[447px] flex items-center justify-between px-10 overflow-hidden">
 
-        <div className="text-white max-w-md">
-          <h1 className="text-4xl font-bold leading-tight">
-            Do CAOS à organização
+
+        <div className="text-white">
+          <h1 className="text-6xl font-bold leading-tight">
+            Do CAOS à organização,
             <br />
             em alguns cliques
           </h1>
@@ -134,7 +135,7 @@ export default function Home() {
           ) : (
           <ListaProdutos pesquisa={pesquisa} />
         )}
-
+        
         <div className="relative mt-16">
 
           <CarrosselLojas
