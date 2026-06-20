@@ -45,7 +45,8 @@ export default function Home() {
   const [categoriasSelecionadas, setCategoriasSelecionadas] = useState<string[]>([]);
   const [pesquisa, setPesquisa] = useState("");
   return (
-    <main className="min-h-screen bg-white">
+
+    <main className="min-h-screen bg-white overflow-x-hidden">
 
       <Navbar />
 
@@ -133,20 +134,20 @@ export default function Home() {
           ) : (
           <ListaProdutos pesquisa={pesquisa} />
         )}
-        
-        <div className="flex justify-between items-start mt-16 gap-10">
 
-          <div className="flex-1">
-            <CarrosselLojas
-              titulo="Lojas"
+        <div className="relative mt-16">
+
+          <CarrosselLojas
+            titulo="Lojas"
+            categoriasSelecionadas={categoriasSelecionadas}
+          />
+
+          <div className="absolute top-0 right-0 z-20">
+            <FiltroCategoria
               categoriasSelecionadas={categoriasSelecionadas}
+              setCategoriasSelecionadas={setCategoriasSelecionadas}
             />
           </div>
-
-          <FiltroCategoria
-            categoriasSelecionadas={categoriasSelecionadas}
-            setCategoriasSelecionadas={setCategoriasSelecionadas}
-          />
 
         </div>
 

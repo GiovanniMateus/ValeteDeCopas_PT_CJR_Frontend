@@ -16,7 +16,7 @@ export default function CategoriaEspecifica() {
   const [pesquisa, setPesquisa] = useState('');
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white overflow-x-hidden">
 
       <Navbar />
 
@@ -50,16 +50,12 @@ export default function CategoriaEspecifica() {
        <GradePaginada categoriaId={categoriaId} pesquisa={pesquisa} />        
 
 
-        <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
+        <div className="w-full">
             <CarrosselLojasCategoria
               categoriaId={categoriaId}
               titulo="Principais Lojas"
             />
         </div>
-
-
-
-     
 
         <CarrosselProdutos
           titulo="Mais populares"
